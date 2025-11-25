@@ -82,6 +82,48 @@ python -m build
 
 The resulting files will be written to `dist/` and can be uploaded to an index such as PyPI with a tool like `twine`.
 
+## Release process
+
+nonwordgen uses a standard Python packaging and GitHub-based release flow.
+
+1. Choose a new version  
+   - Decide the next version number (for example `0.2.0`).  
+   - Edit `nonwordgen/__init__.py` and update `__version__ = "0.2.0"`.  
+   - Optionally update the README or changelog to describe the changes.
+
+2. Run tests and build artifacts  
+   ```bash
+   pytest
+   python -m pip install --upgrade build
+   python -m build
+   ```
+   - This creates `dist/nonwordgen-<version>-py3-none-any.whl` and `dist/nonwordgen-<version>.tar.gz`.
+
+3. Commit and tag the release  
+   ```bash
+   git status
+   git add nonwordgen/__init__.py README.md
+   git commit -m "Release v0.2.0"
+   git tag -a v0.2.0 -m "Release v0.2.0"
+   git push origin main --tags
+   ```
+
+4. Create a GitHub Release  
+   - In the GitHub UI, go to “Releases” → “Draft a new release”.  
+   - Select the tag you just pushed (e.g. `v0.2.0`) or create it there.  
+   - Set the release title (for example `nonwordgen v0.2.0`) and description (high‑level changelog).  
+   - Attach the built artifacts from `dist/` (`.whl` and `.tar.gz`) so users can download them directly.  
+   - Publish the release.
+
+5. (Optional) Upload to PyPI  
+   ```bash
+   python -m pip install --upgrade twine
+   python -m twine upload dist/*
+   ```
+   - This makes the new version installable via `pip install nonwordgen` and `pip install "nonwordgen[gui]"`, etc.
+
+All package data (including the GUI icon under `nonwordgen/assets/`) is included automatically in the built distributions by virtue of the `pyproject.toml` and `MANIFEST.in` configuration.
+
 ## License
 
 Released under the MIT License. See `LICENSE` for details.
