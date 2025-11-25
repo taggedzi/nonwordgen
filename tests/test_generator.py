@@ -176,6 +176,7 @@ def test_available_languages_list() -> None:
     assert "indonesian" in langs
     assert "swahili" in langs
     assert "german" in langs
+    assert "turkish" in langs
 
 
 def test_french_language_plugin_generates_words() -> None:
@@ -247,3 +248,14 @@ def test_german_plugin_can_emit_umlauts() -> None:
     rng = DeterministicChoiceRNG([0, umlaut_index, 0])
     word = plugin.build_candidate(rng, 1, 1, 5)
     assert "ä" in word
+
+
+def test_turkish_language_plugin_generates_words() -> None:
+    gen = WordGenerator(
+        allow_real_words=True,
+        rng=random.Random(8642),
+        language="turkish",
+    )
+    word = gen.generate_one()
+    assert isinstance(word, str)
+    assert len(word) >= 2

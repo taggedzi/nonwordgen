@@ -11,6 +11,7 @@ from .indonesian import IndonesianLanguagePlugin
 from .portuguese import PortugueseLanguagePlugin
 from .spanish import SpanishLanguagePlugin
 from .swahili import SwahiliLanguagePlugin
+from .turkish import TurkishLanguagePlugin
 
 _REGISTERED_PLUGINS: Dict[str, LanguagePlugin] = {}
 
@@ -27,6 +28,7 @@ register_language(IndonesianLanguagePlugin())
 register_language(PortugueseLanguagePlugin())
 register_language(SpanishLanguagePlugin())
 register_language(SwahiliLanguagePlugin())
+register_language(TurkishLanguagePlugin())
 
 
 def available_languages() -> list[str]:
