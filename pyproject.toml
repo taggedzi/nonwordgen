@@ -16,6 +16,9 @@ dependencies = []
 dictionaries = [
     "wordfreq>=3.0.1",
 ]
+gui = [
+    "PyQt6>=6.5",
+]
 dev = [
     "pytest>=7.4",
 ]

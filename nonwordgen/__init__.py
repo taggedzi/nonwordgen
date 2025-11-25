@@ -6,6 +6,12 @@ from .dictionary_base import DictionaryBackend
 from .generator import WordGenerator
 from .language_base import LanguagePlugin
 from .languages import available_languages, get_language_plugin
+from .textgen import (
+    generate_sentence,
+    generate_sentences,
+    generate_paragraph,
+    generate_paragraphs,
+)
 
 __all__ = [
     "DictionaryBackend",
@@ -15,6 +21,10 @@ __all__ = [
     "available_languages",
     "build_dictionary_for_strictness",
     "get_language_plugin",
+    "generate_sentence",
+    "generate_sentences",
+    "generate_paragraph",
+    "generate_paragraphs",
 ]
 
 __version__ = "0.1.0"

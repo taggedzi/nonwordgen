@@ -21,11 +21,20 @@ print(gen.generate_many(10))
 ## CLI usage
 
 ```bash
-# English (default)
+# Words (English default)
 nonwordgen -n 20 --min-length 4 --max-length 8 --strictness strict
 
-# Spanish
+# Words (Spanish)
 nonwordgen -n 20 --min-length 4 --max-length 8 --strictness strict --language spanish
+
+# Sentences
+nonwordgen sentences -n 5 --language french --min-words 3 --max-words 8
+
+# Paragraphs
+nonwordgen paragraphs -p 2 --min-sentences 2 --max-sentences 4 --language german
+
+# Launch GUI (requires PyQt6)
+nonwordgen gui
 ```
 
 ## Languages
@@ -38,6 +47,7 @@ The package works out of the box with a small built-in dictionary. Installing th
 
 - `wordfreq` enables frequency-based filtering (install via `pip install "nonwordgen[dictionaries]"`).
 - `wordset` contributes a larger English word list if you happen to have that package available separately.
+- `PyQt6` enables the GUI (`pip install "nonwordgen[gui]"`).
 
 ## Development
 
