@@ -30,7 +30,7 @@ nonwordgen -n 20 --min-length 4 --max-length 8 --strictness strict --language sp
 
 ## Languages
 
-Available plugins: `english` (default), `spanish`, `french`, `portuguese`, `indonesian`, and `swahili`. The CLI lists valid options via `--help`, and the Python API exposes `nonwordgen.available_languages()` if you need to inspect them programmatically.
+Available plugins: `english` (default), `spanish`, `french`, `portuguese`, `indonesian`, `swahili`, and `german`. The CLI lists valid options via `--help`, and the Python API exposes `nonwordgen.available_languages()` if you need to inspect them programmatically.
 
 ## Optional dependencies
 
