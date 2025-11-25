@@ -154,10 +154,22 @@ def test_available_languages_list() -> None:
     assert "english" in langs
     assert "spanish" in langs
     assert "french" in langs
+    assert "portuguese" in langs
 
 
 def test_french_language_plugin_generates_words() -> None:
     gen = WordGenerator(allow_real_words=True, rng=random.Random(1234), language="french")
+    word = gen.generate_one()
+    assert isinstance(word, str)
+    assert len(word) >= 2
+
+
+def test_portuguese_language_plugin_generates_words() -> None:
+    gen = WordGenerator(
+        allow_real_words=True,
+        rng=random.Random(4321),
+        language="portuguese",
+    )
     word = gen.generate_one()
     assert isinstance(word, str)
     assert len(word) >= 2
