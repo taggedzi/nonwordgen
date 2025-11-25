@@ -39,7 +39,7 @@ nonwordgen gui
 
 ## Languages
 
-Available plugins: `english` (default), `spanish`, `french`, `portuguese`, `indonesian`, `swahili`, `german`, `turkish`, `russian`, `vietnamese`, `hindi`, `korean`, `italian`, `dutch`, `tagalog`, `romanian`, and `swedish`. The CLI lists valid options via `--help`, and the Python API exposes `nonwordgen.available_languages()` if you need to inspect them programmatically.
+Available plugins: `english` (default), `spanish`, `french`, `portuguese`, `indonesian`, `swahili`, `german`, `turkish`, `russian`, `vietnamese`, `hindi`, `korean`, `italian`, `dutch`, `tagalog`, `romanian`, `swedish`, and `norwegian`. The CLI lists valid options via `--help`, and the Python API exposes `nonwordgen.available_languages()` if you need to inspect them programmatically.
 
 ## Optional dependencies
 
