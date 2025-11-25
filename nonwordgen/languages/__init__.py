@@ -9,6 +9,7 @@ from .french import FrenchLanguagePlugin
 from .german import GermanLanguagePlugin
 from .hindi import HindiLanguagePlugin
 from .indonesian import IndonesianLanguagePlugin
+from .korean import KoreanLanguagePlugin
 from .portuguese import PortugueseLanguagePlugin
 from .spanish import SpanishLanguagePlugin
 from .swahili import SwahiliLanguagePlugin
@@ -29,6 +30,7 @@ register_language(FrenchLanguagePlugin())
 register_language(GermanLanguagePlugin())
 register_language(HindiLanguagePlugin())
 register_language(IndonesianLanguagePlugin())
+register_language(KoreanLanguagePlugin())
 register_language(PortugueseLanguagePlugin())
 register_language(SpanishLanguagePlugin())
 register_language(SwahiliLanguagePlugin())
