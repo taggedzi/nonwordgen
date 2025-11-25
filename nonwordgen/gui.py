@@ -32,7 +32,8 @@ def _lazy_import_qt():  # pragma: no cover - import guard
             QWidget,
             QPlainTextEdit,
         )
-        from PyQt6.QtGui import QIcon
+        from PyQt6.QtCore import Qt
+        from PyQt6.QtGui import QIcon, QPixmap
     except Exception as exc:  # pragma: no cover - import guard
         raise ImportError("PyQt6 is required for the GUI. Install via 'pip install PyQt6'.") from exc
     return {
@@ -51,6 +52,8 @@ def _lazy_import_qt():  # pragma: no cover - import guard
         "QWidget": QWidget,
         "QPlainTextEdit": QPlainTextEdit,
         "QIcon": QIcon,
+        "QPixmap": QPixmap,
+        "Qt": Qt,
     }
 
 
@@ -62,6 +65,7 @@ class MainWindow:  # pragma: no cover - GUI heavy
         QMainWindow = qt["QMainWindow"]
         QTabWidget = qt["QTabWidget"]
         QIcon = qt["QIcon"]
+        QPixmap = qt["QPixmap"]
         QWidget = qt["QWidget"]
         QVBoxLayout = qt["QVBoxLayout"]
         QHBoxLayout = qt["QHBoxLayout"]
@@ -74,12 +78,14 @@ class MainWindow:  # pragma: no cover - GUI heavy
         self.window = QMainWindow()
         self.window.setWindowTitle("Nonword Generator")
 
+        self._about_pixmap = None
         try:
             icon_path = resources.files("nonwordgen").joinpath("assets/nonword-gen.png")
         except Exception:
             icon_path = None
         if icon_path is not None:
             self.window.setWindowIcon(QIcon(str(icon_path)))
+            self._about_pixmap = QPixmap(str(icon_path))
 
         menubar = self.window.menuBar()
         help_menu = menubar.addMenu("&Help")
@@ -141,10 +147,20 @@ class MainWindow:  # pragma: no cover - GUI heavy
 
     def _show_about_dialog(self) -> None:
         QMessageBox = self.qt["QMessageBox"]
+        Qt = self.qt["Qt"]
 
         dialog = QMessageBox(self.window)
         dialog.setWindowTitle("About nonwordgen")
         dialog.setWindowIcon(self.window.windowIcon())
+
+        if self._about_pixmap is not None:
+            scaled = self._about_pixmap.scaled(
+                128,
+                128,
+                Qt.AspectRatioMode.KeepAspectRatio,
+                Qt.TransformationMode.SmoothTransformation,
+            )
+            dialog.setIconPixmap(scaled)
 
         github_url = "https://github.com/your-username/your-repo"
         text = (
