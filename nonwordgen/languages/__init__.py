@@ -17,6 +17,7 @@ from .swahili import SwahiliLanguagePlugin
 from .turkish import TurkishLanguagePlugin
 from .russian import RussianLanguagePlugin
 from .vietnamese import VietnameseLanguagePlugin
+from .dutch import DutchLanguagePlugin
 
 _REGISTERED_PLUGINS: Dict[str, LanguagePlugin] = {}
 
@@ -39,6 +40,7 @@ register_language(SwahiliLanguagePlugin())
 register_language(TurkishLanguagePlugin())
 register_language(RussianLanguagePlugin())
 register_language(VietnameseLanguagePlugin())
+register_language(DutchLanguagePlugin())
 
 
 def available_languages() -> list[str]:
