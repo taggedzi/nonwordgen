@@ -7,6 +7,7 @@ from typing import Sequence
 
 from .config import Strictness
 from .generator import WordGenerator
+from .languages import available_languages
 
 
 def _build_parser() -> argparse.ArgumentParser:
@@ -61,6 +62,13 @@ def _build_parser() -> argparse.ArgumentParser:
         type=int,
         help="Seed for the random number generator.",
     )
+    parser.add_argument(
+        "--language",
+        type=str,
+        default="english",
+        choices=available_languages(),
+        help="Language plugin to use (default: english).",
+    )
     return parser
 
 
@@ -78,6 +86,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         strictness=Strictness(args.strictness),
         allow_real_words=args.allow_real_words,
         rng=rng,
+        language=args.language,
     )
 
     for word in generator.generate_many(args.count):

@@ -6,7 +6,8 @@ from typing import Iterable, Optional
 
 from .config import Strictness, build_dictionary_for_strictness
 from .dictionary_base import DictionaryBackend
-from .phonotactics import build_candidate
+from .language_base import LanguagePlugin
+from .languages import get_language_plugin
 
 
 class WordGenerator:
@@ -23,6 +24,8 @@ class WordGenerator:
         banned_words: Optional[Iterable[str]] = None,
         dictionary: Optional[DictionaryBackend] = None,
         rng: Optional[random.Random] = None,
+        language: str = "english",
+        language_plugin: LanguagePlugin | None = None,
     ) -> None:
         if min_length < 1:
             raise ValueError("min_length must be at least 1.")
@@ -39,7 +42,10 @@ class WordGenerator:
         self.max_syllables = max_syllables
         self.strictness = strictness
         self.allow_real_words = allow_real_words
-        self._dictionary = dictionary or build_dictionary_for_strictness(strictness)
+        self._language_plugin = language_plugin or get_language_plugin(language)
+        self._dictionary = dictionary or build_dictionary_for_strictness(
+            strictness, language_plugin=self._language_plugin
+        )
         self._rng = rng or random.Random()
         self._banned_words = (
             {word.lower() for word in banned_words} if banned_words else set()
@@ -51,7 +57,7 @@ class WordGenerator:
             raise ValueError("max_attempts must be at least 1.")
 
         for _ in range(max_attempts):
-            candidate = build_candidate(
+            candidate = self._language_plugin.build_candidate(
                 self._rng,
                 self.min_syllables,
                 self.max_syllables,

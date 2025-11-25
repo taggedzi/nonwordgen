@@ -1,12 +1,14 @@
 from __future__ import annotations
 
 import random
+from typing import Iterable, Iterator, Optional
 
 import pytest
 
-import nonwordgen.generator as generator_module
 from nonwordgen.dictionary_base import DictionaryBackend
 from nonwordgen.generator import WordGenerator
+from nonwordgen.language_base import LanguagePlugin
+from nonwordgen.strictness import Strictness
 
 
 class AlwaysRealDictionary(DictionaryBackend):
@@ -14,6 +16,41 @@ class AlwaysRealDictionary(DictionaryBackend):
 
     def is_real_word(self, word: str) -> bool:  # pragma: no cover - trivial
         return True
+
+
+class AlwaysFalseDictionary(DictionaryBackend):
+    """Dictionary that never flags words as real."""
+
+    def is_real_word(self, word: str) -> bool:  # pragma: no cover - trivial
+        return False
+
+
+class StubLanguagePlugin(LanguagePlugin):
+    """Language plugin that yields predetermined candidates."""
+
+    name = "stub"
+
+    def __init__(
+        self,
+        candidates: Iterable[str],
+        dictionary: Optional[DictionaryBackend] = None,
+    ) -> None:
+        self._candidates: Iterator[str] = iter(candidates)
+        self._dictionary = dictionary or AlwaysFalseDictionary()
+
+    def build_candidate(
+        self,
+        rng: random.Random,
+        min_syllables: int,
+        max_syllables: int,
+        max_length: int,
+    ) -> str:
+        return next(self._candidates)
+
+    def build_dictionary(
+        self, strictness: Strictness, real_word_min_zipf: float = 2.7
+    ) -> DictionaryBackend:
+        return self._dictionary
 
 
 def test_generate_one_word() -> None:
@@ -30,75 +67,74 @@ def test_generate_many_count() -> None:
     assert len(set(words)) == len(words)
 
 
-def test_length_constraints(monkeypatch: pytest.MonkeyPatch) -> None:
-    responses = iter(["zo", "extralongword", "mistral"])
-
-    def fake_candidate(rng, min_s, max_s, max_len) -> str:  # type: ignore[override]
-        return next(responses)
-
-    monkeypatch.setattr(generator_module, "build_candidate", fake_candidate)
+def test_length_constraints() -> None:
+    plugin = StubLanguagePlugin(["zo", "extralongword", "mistral"])
     gen = WordGenerator(
         min_length=4,
         max_length=8,
         allow_real_words=True,
         rng=random.Random(0),
+        language_plugin=plugin,
     )
     assert gen.generate_one(max_attempts=3) == "mistral"
 
 
-def test_banned_words(monkeypatch: pytest.MonkeyPatch) -> None:
-    responses = iter(["drale", "florin"])
-
-    def fake_candidate(rng, min_s, max_s, max_len) -> str:  # type: ignore[override]
-        return next(responses)
-
-    monkeypatch.setattr(generator_module, "build_candidate", fake_candidate)
+def test_banned_words() -> None:
+    plugin = StubLanguagePlugin(["drale", "florin"])
     gen = WordGenerator(
         banned_words={"drale"},
         allow_real_words=True,
         rng=random.Random(0),
+        language_plugin=plugin,
     )
     assert gen.generate_one(max_attempts=2) == "florin"
 
 
-def test_syllable_arguments_forwarded(monkeypatch: pytest.MonkeyPatch) -> None:
+def test_syllable_arguments_forwarded() -> None:
     captured: dict[str, int] = {}
 
-    def fake_candidate(rng, min_s, max_s, max_len) -> str:  # type: ignore[override]
-        captured["min"] = min_s
-        captured["max"] = max_s
-        captured["len"] = max_len
-        return "slorn"
+    class RecordingPlugin(StubLanguagePlugin):
+        def build_candidate(
+            self,
+            rng: random.Random,
+            min_syllables: int,
+            max_syllables: int,
+            max_length: int,
+        ) -> str:
+            captured["min"] = min_syllables
+            captured["max"] = max_syllables
+            captured["len"] = max_length
+            return super().build_candidate(rng, min_syllables, max_syllables, max_length)
 
-    monkeypatch.setattr(generator_module, "build_candidate", fake_candidate)
+    plugin = RecordingPlugin(["slorn"])
     gen = WordGenerator(
         min_syllables=2,
         max_syllables=4,
         max_length=9,
         allow_real_words=True,
         rng=random.Random(0),
+        language_plugin=plugin,
     )
     gen.generate_one(max_attempts=1)
     assert captured == {"min": 2, "max": 4, "len": 9}
 
 
-def test_dictionary_and_allow_real_words_flag(monkeypatch: pytest.MonkeyPatch) -> None:
-    def fake_candidate(rng, min_s, max_s, max_len) -> str:  # type: ignore[override]
-        return "delta"
-
-    monkeypatch.setattr(generator_module, "build_candidate", fake_candidate)
-
+def test_dictionary_and_allow_real_words_flag() -> None:
+    plugin_blocking = StubLanguagePlugin(["delta", "delta"])
     blocking = WordGenerator(
         dictionary=AlwaysRealDictionary(),
         allow_real_words=False,
         rng=random.Random(0),
+        language_plugin=plugin_blocking,
     )
     with pytest.raises(RuntimeError):
         blocking.generate_one(max_attempts=2)
 
+    plugin_allowing = StubLanguagePlugin(["delta"])
     allowing = WordGenerator(
         dictionary=AlwaysRealDictionary(),
         allow_real_words=True,
         rng=random.Random(0),
+        language_plugin=plugin_allowing,
     )
     assert allowing.generate_one(max_attempts=1) == "delta"

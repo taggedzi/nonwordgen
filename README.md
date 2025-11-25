@@ -1,6 +1,6 @@
 # nonwordgen
 
-`nonwordgen` generates English-like non-words using a syllable-based phonotactic model and filters that attempt to discard real English vocabulary via pluggable dictionary backends.
+`nonwordgen` generates English-like non-words using a syllable-based phonotactic model and filters that attempt to discard real English vocabulary via pluggable dictionary backends. The generator now loads language capabilities via plugins; the built-in English plugin replicates the previous behavior and future releases can add more languages without disturbing this API.
 
 ## Library usage
 
@@ -11,6 +11,7 @@ gen = WordGenerator(
     min_length=5,
     max_length=9,
     strictness=Strictness.MEDIUM,
+    language="english",  # default plugin
 )
 
 print(gen.generate_one())
@@ -20,7 +21,7 @@ print(gen.generate_many(10))
 ## CLI usage
 
 ```bash
-nonwordgen -n 20 --min-length 4 --max-length 8 --strictness strict
+nonwordgen -n 20 --min-length 4 --max-length 8 --strictness strict --language english
 ```
 
 ## Optional dependencies
