@@ -27,6 +27,7 @@ from .afrikaans import AfrikaansLanguagePlugin
 from .yoruba import YorubaLanguagePlugin
 from .polish import PolishLanguagePlugin
 from .czech import CzechLanguagePlugin
+from .hungarian import HungarianLanguagePlugin
 from .norwegian import NorwegianLanguagePlugin
 
 _REGISTERED_PLUGINS: Dict[str, LanguagePlugin] = {}
@@ -60,6 +61,7 @@ register_language(AfrikaansLanguagePlugin())
 register_language(YorubaLanguagePlugin())
 register_language(PolishLanguagePlugin())
 register_language(CzechLanguagePlugin())
+register_language(HungarianLanguagePlugin())
 
 
 def available_languages() -> list[str]:
