@@ -62,15 +62,14 @@ GERMAN_NUCLEI = [
     "i",
     "o",
     "u",
-    "ae",
-    "oe",
-    "ue",
+    "ä",
+    "ö",
+    "ü",
     "ai",
     "ei",
-    "ie",
     "au",
     "eu",
-    "oi",
+    "äu",
 ]
 
 GERMAN_CODAS = [
@@ -95,6 +94,7 @@ GERMAN_CODAS = [
     "nt",
     "rst",
     "rt",
+    "ß",
 ]
 
 COMMON_GERMAN_WORDS = [
@@ -131,6 +131,9 @@ COMMON_GERMAN_WORDS = [
     "eins",
     "zwei",
     "drei",
+    "mädchen",
+    "groß",
+    "früh",
 ]
 
 

@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import random
-from typing import Iterable, Iterator, Optional
+from typing import Iterable, Iterator, Optional, Sequence
 
 import pytest
 
@@ -51,6 +51,24 @@ class StubLanguagePlugin(LanguagePlugin):
         self, strictness: Strictness, real_word_min_zipf: float = 2.7
     ) -> DictionaryBackend:
         return self._dictionary
+
+
+class DeterministicChoiceRNG:
+    """Minimal RNG that returns deterministic items for choice()/randint()."""
+
+    def __init__(self, choice_indexes: Iterable[int]):
+        self._iter = iter(choice_indexes)
+
+    def randint(self, a: int, b: int) -> int:  # pragma: no cover - trivial
+        return a
+
+    def choice(self, seq: Sequence[str]):
+        try:
+            idx = next(self._iter)
+        except StopIteration:
+            idx = 0
+        sequence = list(seq)
+        return sequence[idx % len(sequence)]
 
 
 def test_generate_one_word() -> None:
@@ -209,3 +227,23 @@ def test_german_language_plugin_generates_words() -> None:
     word = gen.generate_one()
     assert isinstance(word, str)
     assert len(word) >= 2
+
+
+def test_spanish_plugin_can_emit_accented_characters() -> None:
+    from nonwordgen.languages import spanish as spanish_module
+
+    plugin = spanish_module.SpanishLanguagePlugin()
+    accent_index = spanish_module.SPANISH_NUCLEI.index("á")
+    rng = DeterministicChoiceRNG([0, accent_index, 0])
+    word = plugin.build_candidate(rng, 1, 1, 5)
+    assert "á" in word
+
+
+def test_german_plugin_can_emit_umlauts() -> None:
+    from nonwordgen.languages import german as german_module
+
+    plugin = german_module.GermanLanguagePlugin()
+    umlaut_index = german_module.GERMAN_NUCLEI.index("ä")
+    rng = DeterministicChoiceRNG([0, umlaut_index, 0])
+    word = plugin.build_candidate(rng, 1, 1, 5)
+    assert "ä" in word

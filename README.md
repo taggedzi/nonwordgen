@@ -1,6 +1,6 @@
 # nonwordgen
 
-`nonwordgen` generates pseudo-words using a syllable-based phonotactic model and filters that attempt to discard real vocabulary via pluggable dictionary backends. The generator now loads language capabilities via plugins; the built-in English plugin replicates the previous behavior and a new Spanish plugin ships alongside it so additional languages can be added later without affecting the public API.
+`nonwordgen` generates pseudo-words using a syllable-based phonotactic model and filters that attempt to discard real vocabulary via pluggable dictionary backends. The generator now loads language capabilities via plugins; each plugin ships with syllable inventories that include the native orthography (accents, umlauts, etc.) so the resulting strings look appropriate for the selected language.
 
 ## Library usage
 
