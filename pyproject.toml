@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "nonwordgen"
+version = "0.1.0"
+description = "Generate English-like non-words with configurable strictness."
+readme = "README.md"
+authors = [{name = "Codex"}]
+requires-python = ">=3.11"
+license = {text = "MIT"}
+dependencies = []
+
+[project.optional-dependencies]
+dictionaries = [
+    "wordfreq>=3.0.1",
+]
+dev = [
+    "pytest>=7.4",
+]
+
+[project.scripts]
+nonwordgen = "nonwordgen.cli:main"
