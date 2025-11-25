@@ -6,6 +6,7 @@ from typing import Dict
 from ..language_base import LanguagePlugin
 from .english import EnglishLanguagePlugin
 from .french import FrenchLanguagePlugin
+from .indonesian import IndonesianLanguagePlugin
 from .portuguese import PortugueseLanguagePlugin
 from .spanish import SpanishLanguagePlugin
 
@@ -19,6 +20,7 @@ def register_language(plugin: LanguagePlugin) -> None:
 
 register_language(EnglishLanguagePlugin())
 register_language(FrenchLanguagePlugin())
+register_language(IndonesianLanguagePlugin())
 register_language(PortugueseLanguagePlugin())
 register_language(SpanishLanguagePlugin())
 
