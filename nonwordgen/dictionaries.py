@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 import logging
-from typing import Any, Iterable
+from typing import Any, Iterable, Sequence
 
 from .dictionary_base import DictionaryBackend
 
@@ -71,9 +71,11 @@ class WordfreqDictionary(DictionaryBackend):
     def __init__(
         self,
         real_word_min_zipf: float = 2.7,
+        language: str = "en",
         require_library: bool = False,
     ) -> None:
         self.real_word_min_zipf = real_word_min_zipf
+        self.language = language
         self._available = zipf_frequency is not None
         if not self._available:
             message = (
@@ -91,16 +93,21 @@ class WordfreqDictionary(DictionaryBackend):
     def is_real_word(self, word: str) -> bool:
         if not self._available or zipf_frequency is None:
             return False
-        score = zipf_frequency(word, "en")
+        score = zipf_frequency(word, self.language)
         return score >= self.real_word_min_zipf
 
 
 class WordsetDictionary(DictionaryBackend):
     """Dictionary backend backed by the optional wordset package."""
 
-    def __init__(self, require_library: bool = False) -> None:
+    def __init__(
+        self,
+        language: str = "en",
+        require_library: bool = False,
+    ) -> None:
         self._words: set[str] = set()
         self._available = False
+        self.language = language
         module = _wordset_module
         if module is None:
             message = (
@@ -110,11 +117,11 @@ class WordsetDictionary(DictionaryBackend):
                 raise RuntimeError(message)
             logger.info(message)
             return
-
-        words = self._load_words(module)
+        words = self._load_words(module, language)
         if not words:
             logger.warning(
-                "wordset is installed but returned no English entries; disabling backend."
+                "wordset is installed but returned no entries for language '%s'; disabling backend.",
+                language,
             )
             return
 
@@ -122,7 +129,7 @@ class WordsetDictionary(DictionaryBackend):
         self._available = True
 
     @staticmethod
-    def _load_words(module: Any) -> set[str]:
+    def _load_words(module: Any, language: str) -> set[str]:
         loaders = [
             getattr(module, "load", None),
             getattr(module, "words", None),
@@ -132,7 +139,7 @@ class WordsetDictionary(DictionaryBackend):
             if not callable(loader):
                 continue
             try:
-                words_iter = loader("en")
+                words_iter = loader(language)
             except TypeError:
                 try:
                     words_iter = loader()
@@ -170,9 +177,22 @@ class CompositeDictionary(DictionaryBackend):
         return any(backend.is_real_word(word) for backend in self.backends)
 
 
+class StaticWordSetDictionary(DictionaryBackend):
+    """Simple dictionary that uses a provided set of words."""
+
+    def __init__(self, words: Sequence[str]) -> None:
+        if not words:
+            raise ValueError("StaticWordSetDictionary requires at least one word.")
+        self._words = {word.lower() for word in words}
+
+    def is_real_word(self, word: str) -> bool:
+        return word.lower() in self._words
+
+
 __all__ = [
     "BuiltinCommonWordsDictionary",
     "WordfreqDictionary",
     "WordsetDictionary",
     "CompositeDictionary",
+    "StaticWordSetDictionary",
 ]

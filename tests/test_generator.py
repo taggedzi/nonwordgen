@@ -138,3 +138,18 @@ def test_dictionary_and_allow_real_words_flag() -> None:
         language_plugin=plugin_allowing,
     )
     assert allowing.generate_one(max_attempts=1) == "delta"
+
+
+def test_spanish_language_plugin_generates_words() -> None:
+    gen = WordGenerator(allow_real_words=True, rng=random.Random(9876), language="spanish")
+    word = gen.generate_one()
+    assert isinstance(word, str)
+    assert len(word) >= 2
+
+
+def test_available_languages_list() -> None:
+    from nonwordgen import available_languages
+
+    langs = available_languages()
+    assert "english" in langs
+    assert "spanish" in langs

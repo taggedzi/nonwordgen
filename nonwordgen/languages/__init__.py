@@ -5,6 +5,7 @@ from typing import Dict
 
 from ..language_base import LanguagePlugin
 from .english import EnglishLanguagePlugin
+from .spanish import SpanishLanguagePlugin
 
 _REGISTERED_PLUGINS: Dict[str, LanguagePlugin] = {}
 
@@ -15,6 +16,7 @@ def register_language(plugin: LanguagePlugin) -> None:
 
 
 register_language(EnglishLanguagePlugin())
+register_language(SpanishLanguagePlugin())
 
 
 def available_languages() -> list[str]:

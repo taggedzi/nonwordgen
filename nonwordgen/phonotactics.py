@@ -139,13 +139,16 @@ def _has_ugly_patterns(word: str) -> bool:
     return False
 
 
-def build_candidate(
+def build_candidate_from_profile(
     rng: random.Random,
     min_syllables: int,
     max_syllables: int,
     max_length: int,
+    onsets: Sequence[str],
+    nuclei: Sequence[str],
+    codas: Sequence[str],
 ) -> str:
-    """Build a candidate non-word by sampling random syllables."""
+    """Build a candidate word using the provided syllable profile."""
     if min_syllables < 1:
         raise ValueError("min_syllables must be at least 1.")
     if min_syllables > max_syllables:
@@ -160,9 +163,9 @@ def build_candidate(
         length_so_far = 0
 
         for _ in range(syllable_target):
-            onset = rng.choice(ONSETS)
-            nucleus = rng.choice(NUCLEI)
-            coda = rng.choice(CODAS)
+            onset = rng.choice(onsets)
+            nucleus = rng.choice(nuclei)
+            coda = rng.choice(codas)
             syllable = f"{onset}{nucleus}{coda}"
             projected_length = length_so_far + len(syllable)
             if projected_length > max_length and pieces:
@@ -182,7 +185,25 @@ def build_candidate(
         if not _has_ugly_patterns(candidate):
             return candidate
 
-    return last_candidate or rng.choice(NUCLEI).lower()
+    return last_candidate or rng.choice(nuclei).lower()
 
 
-__all__ = ["build_candidate"]
+def build_candidate(
+    rng: random.Random,
+    min_syllables: int,
+    max_syllables: int,
+    max_length: int,
+) -> str:
+    """Build an English-style candidate word."""
+    return build_candidate_from_profile(
+        rng,
+        min_syllables,
+        max_syllables,
+        max_length,
+        ONSETS,
+        NUCLEI,
+        CODAS,
+    )
+
+
+__all__ = ["build_candidate", "build_candidate_from_profile"]
