@@ -2,6 +2,22 @@
 
 `nonwordgen` generates pseudo-words using a syllable-based phonotactic model and filters that attempt to discard real vocabulary via pluggable dictionary backends. The generator now loads language capabilities via plugins; each plugin ships with syllable inventories that include the native orthography (accents, umlauts, etc.) so the resulting strings look appropriate for the selected language.
 
+## Installation
+
+The package is pure Python and ships wheels for Windows, macOS, and Linux.
+
+```bash
+python -m pip install nonwordgen                 # base install
+python -m pip install "nonwordgen[gui]"         # add PyQt6 for the GUI
+python -m pip install "nonwordgen[dictionaries]"  # richer dictionary filtering
+```
+
+From a clone of this repository you can install in editable mode for development:
+
+```bash
+python -m pip install -e ".[dev]"
+```
+
 ## Library usage
 
 ```python
@@ -56,3 +72,16 @@ Run the test suite with:
 ```bash
 pytest
 ```
+
+To build distributable artifacts (wheel + sdist) locally:
+
+```bash
+python -m pip install --upgrade build
+python -m build
+```
+
+The resulting files will be written to `dist/` and can be uploaded to an index such as PyPI with a tool like `twine`.
+
+## License
+
+Released under the MIT License. See `LICENSE` for details.
