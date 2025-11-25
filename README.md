@@ -127,3 +127,15 @@ All package data (including the GUI icon under `nonwordgen/assets/`) is included
 ## License
 
 Released under the MIT License. See `LICENSE` for details.
+
+## AI disclosures
+
+Parts of the project documentation and build guidance were drafted with generative AI assistance (OpenAI’s models) and reviewed before publication.
+
+## Third-party notices
+
+- **PyQt6** (GUI) – provided by The Qt Company under the GNU GPL v3 (or a commercial license) and LGPL-compatible runtime components; install via `pip install PyQt6>=6.5`.
+- **wordfreq** (dictionary filtering) – MIT licensed; install via `pip install "nonwordgen[dictionaries]"`.
+- **wordset** (optional large English word list) – follow that project’s license when you include it (it is treated as an optional, external dependency).
+
+The optional extras above are not bundled in the base package but are clearly documented so users can install them when needed; their respective distributions contain the full license text you can inspect on PyPI or their source repositories. Any additional third-party assets (language inventories, help icon) ship under their original license via the hosting packages.
