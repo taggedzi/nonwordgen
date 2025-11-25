@@ -194,6 +194,7 @@ def test_available_languages_list() -> None:
     assert "czech" in langs
     assert "hungarian" in langs
     assert "greek" in langs
+    assert "thai" in langs
 
 
 def test_french_language_plugin_generates_words() -> None:
@@ -459,6 +460,17 @@ def test_greek_language_plugin_generates_words() -> None:
         allow_real_words=True,
         rng=random.Random(18181),
         language="greek",
+    )
+    word = gen.generate_one()
+    assert isinstance(word, str)
+    assert len(word) >= 2
+
+
+def test_thai_language_plugin_generates_words() -> None:
+    gen = WordGenerator(
+        allow_real_words=True,
+        rng=random.Random(19191),
+        language="thai",
     )
     word = gen.generate_one()
     assert isinstance(word, str)
