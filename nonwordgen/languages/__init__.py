@@ -7,6 +7,7 @@ from ..language_base import LanguagePlugin
 from .english import EnglishLanguagePlugin
 from .french import FrenchLanguagePlugin
 from .indonesian import IndonesianLanguagePlugin
+from .swahili import SwahiliLanguagePlugin
 from .portuguese import PortugueseLanguagePlugin
 from .spanish import SpanishLanguagePlugin
 
@@ -22,6 +23,7 @@ register_language(EnglishLanguagePlugin())
 register_language(FrenchLanguagePlugin())
 register_language(IndonesianLanguagePlugin())
 register_language(PortugueseLanguagePlugin())
+register_language(SwahiliLanguagePlugin())
 register_language(SpanishLanguagePlugin())
 
 
