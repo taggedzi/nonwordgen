@@ -177,6 +177,7 @@ def test_available_languages_list() -> None:
     assert "swahili" in langs
     assert "german" in langs
     assert "turkish" in langs
+    assert "russian" in langs
 
 
 def test_french_language_plugin_generates_words() -> None:
@@ -255,6 +256,17 @@ def test_turkish_language_plugin_generates_words() -> None:
         allow_real_words=True,
         rng=random.Random(8642),
         language="turkish",
+    )
+    word = gen.generate_one()
+    assert isinstance(word, str)
+    assert len(word) >= 2
+
+
+def test_russian_language_plugin_generates_words() -> None:
+    gen = WordGenerator(
+        allow_real_words=True,
+        rng=random.Random(1111),
+        language="russian",
     )
     word = gen.generate_one()
     assert isinstance(word, str)
