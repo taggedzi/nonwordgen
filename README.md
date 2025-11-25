@@ -2,6 +2,8 @@
 
 `nonwordgen` generates pseudo-words using a syllable-based phonotactic model and filters that attempt to discard real vocabulary via pluggable dictionary backends. The generator now loads language capabilities via plugins; each plugin ships with syllable inventories that include the native orthography (accents, umlauts, etc.) so the resulting strings look appropriate for the selected language.
 
+That is a lot of big words, but in reality, have you ever wanted or needed to generate fake text for any reason? Well the Ipsum Lorum concept text has been used for a long time, but what if you wanted other languages?  What if you needed test data that looked reasonable but probably wasn't? This script has been crafted to try to make words, sentances, and even paragraphs of words that could be from a variety of languages. Please use and enjoy this project.
+
 ## Installation
 
 The package is pure Python and ships wheels for Windows, macOS, and Linux.
