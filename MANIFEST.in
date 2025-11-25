@@ -1,3 +1,4 @@
 include README.md
 include LICENSE
 recursive-exclude * __pycache__ *.py[cod]
+recursive-include nonwordgen/assets *.png

@@ -5,6 +5,9 @@ import sys
 from functools import partial
 from typing import Callable
 
+from importlib import resources
+
+from . import __version__
 from .config import Strictness
 from .generator import WordGenerator
 from .languages import available_languages
@@ -21,6 +24,7 @@ def _lazy_import_qt():  # pragma: no cover - import guard
             QHBoxLayout,
             QLabel,
             QMainWindow,
+            QMessageBox,
             QPushButton,
             QSpinBox,
             QTabWidget,
@@ -28,6 +32,7 @@ def _lazy_import_qt():  # pragma: no cover - import guard
             QWidget,
             QPlainTextEdit,
         )
+        from PyQt6.QtGui import QIcon
     except Exception as exc:  # pragma: no cover - import guard
         raise ImportError("PyQt6 is required for the GUI. Install via 'pip install PyQt6'.") from exc
     return {
@@ -38,12 +43,14 @@ def _lazy_import_qt():  # pragma: no cover - import guard
         "QHBoxLayout": QHBoxLayout,
         "QLabel": QLabel,
         "QMainWindow": QMainWindow,
+        "QMessageBox": QMessageBox,
         "QPushButton": QPushButton,
         "QSpinBox": QSpinBox,
         "QTabWidget": QTabWidget,
         "QVBoxLayout": QVBoxLayout,
         "QWidget": QWidget,
         "QPlainTextEdit": QPlainTextEdit,
+        "QIcon": QIcon,
     }
 
 
@@ -54,6 +61,7 @@ class MainWindow:  # pragma: no cover - GUI heavy
         QApplication = qt["QApplication"]
         QMainWindow = qt["QMainWindow"]
         QTabWidget = qt["QTabWidget"]
+        QIcon = qt["QIcon"]
         QWidget = qt["QWidget"]
         QVBoxLayout = qt["QVBoxLayout"]
         QHBoxLayout = qt["QHBoxLayout"]
@@ -65,6 +73,17 @@ class MainWindow:  # pragma: no cover - GUI heavy
         self.app = QApplication.instance() or QApplication(sys.argv)
         self.window = QMainWindow()
         self.window.setWindowTitle("Nonword Generator")
+
+        try:
+            icon_path = resources.files("nonwordgen").joinpath("assets/nonword-gen.png")
+        except Exception:
+            icon_path = None
+        if icon_path is not None:
+            self.window.setWindowIcon(QIcon(str(icon_path)))
+
+        menubar = self.window.menuBar()
+        help_menu = menubar.addMenu("&Help")
+        help_menu.addAction("About nonwordgen", self._show_about_dialog)
 
         central = QWidget()
         root_layout = QVBoxLayout()
@@ -119,6 +138,23 @@ class MainWindow:  # pragma: no cover - GUI heavy
 
         central.setLayout(root_layout)
         self.window.setCentralWidget(central)
+
+    def _show_about_dialog(self) -> None:
+        QMessageBox = self.qt["QMessageBox"]
+
+        dialog = QMessageBox(self.window)
+        dialog.setWindowTitle("About nonwordgen")
+        dialog.setWindowIcon(self.window.windowIcon())
+
+        github_url = "https://github.com/your-username/your-repo"
+        text = (
+            "nonwordgen\n"
+            f"Version: {__version__}\n\n"
+            "Generate pseudo-words and text using language-aware phonotactics.\n\n"
+            f"GitHub: {github_url}"
+        )
+        dialog.setText(text)
+        dialog.exec()
 
     def _make_output_area(self):
         QPlainTextEdit = self.qt["QPlainTextEdit"]
