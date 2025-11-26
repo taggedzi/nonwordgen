@@ -102,6 +102,11 @@ Launch GUI:
 nonwordgen gui
 ```
 
+Select your language, chose your options and click generate!
+
+<img width="927" height="563" alt="image" src="https://github.com/user-attachments/assets/8f881573-4a74-48cb-879b-f8ce1883cb3c" />
+
+
 ---
 
 ## 🌍 Supported Languages
