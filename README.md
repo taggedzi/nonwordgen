@@ -1,26 +1,58 @@
 # nonwordgen
 
-`nonwordgen` generates pseudo-words using a syllable-based phonotactic model and filters that attempt to discard real vocabulary via pluggable dictionary backends. The generator now loads language capabilities via plugins; each plugin ships with syllable inventories that include the native orthography (accents, umlauts, etc.) so the resulting strings look appropriate for the selected language.
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
+![Platform Support](https://img.shields.io/badge/platform-windows%20%7C%20macOS%20%7C%20linux-blue)
+![Status](https://img.shields.io/badge/status-active-success)
+[![GitHub Release](https://img.shields.io/github/v/release/taggedzi/nonwordgen)](https://github.com/taggedzi/nonwordgen/releases)
+![GitHub Downloads](https://img.shields.io/github/downloads/taggedzi/nonwordgen/total.svg)
 
-That is a lot of big words, but in reality, have you ever wanted or needed to generate fake text for any reason? Well the Ipsum Lorum concept text has been used for a long time, but what if you wanted other languages?  What if you needed test data that looked reasonable but probably wasn't? This script has been crafted to try to make words, sentances, and even paragraphs of words that could be from a variety of languages. Please use and enjoy this project.
+`nonwordgen` is a multilingual text generator that creates **fake words, sentences, and paragraphs** that *look like* they belong to real languages — but aren’t.  
+It’s ideal for **lorem ipsum–style filler text**, **UI design**, **test data**, **creative writing**, or anywhere you need realistic-looking nonsense.
 
-## Installation
+Under the hood, it uses a **phonotactic syllable model**, **language plugins**, and **dictionary-based filters** to ensure generated text looks plausible while avoiding real vocabulary.  
+But using it is easy: pick a language, choose strictness, and generate.
 
-The package is pure Python and ships wheels for Windows, macOS, and Linux.
+---
+
+## ✨ Features
+
+- ✔️ Generate **nonwords**, **sentences**, and full **paragraphs**  
+- ✔️ Currently Supports **29 languages**, including accents & proper orthography  
+- ✔️ **Plugin-based** language architecture  
+- ✔️ Optional dictionary filtering to avoid real words  
+- ✔️ **GUI**, **CLI**, and **Python API**  
+- ✔️ Cross-platform: Windows / macOS / Linux  
+
+---
+
+## 📥 Installation
+
+Since `nonwordgen` is not yet published to PyPI, download it directly from **GitHub Releases**:
+
+➡ **Download the latest wheel or source package:**  
+https://github.com/taggedzi/nonwordgen/releases
+
+Install using pip (point to your downloaded file):
 
 ```bash
-python -m pip install nonwordgen                 # base install
-python -m pip install "nonwordgen[gui]"         # add PyQt6 for the GUI
-python -m pip install "nonwordgen[dictionaries]"  # richer dictionary filtering
-```
+# Install from wheel
+python -m pip install nonwordgen-<version>-py3-none-any.whl
 
-From a clone of this repository you can install in editable mode for development:
+# Or install from source
+python -m pip install nonwordgen-<version>.tar.gz
+````
+
+For development:
 
 ```bash
+git clone https://github.com/taggedzi/nonwordgen.git
+cd nonwordgen
 python -m pip install -e ".[dev]"
 ```
 
-## Library usage
+---
+
+## 🧩 Library Usage
 
 ```python
 from nonwordgen import WordGenerator, Strictness
@@ -36,111 +68,128 @@ print(gen.generate_one())
 print(gen.generate_many(10))
 ```
 
-## CLI usage
+---
+
+## 🖥️ CLI Usage
+
+Words (English):
 
 ```bash
-# Words (English default)
 nonwordgen -n 20 --min-length 4 --max-length 8 --strictness strict
+```
 
-# Words (Spanish)
-nonwordgen -n 20 --min-length 4 --max-length 8 --strictness strict --language spanish
+Words (Spanish):
 
-# Sentences
+```bash
+nonwordgen -n 20 --language spanish --min-length 4 --max-length 8
+```
+
+Sentences:
+
+```bash
 nonwordgen sentences -n 5 --language french --min-words 3 --max-words 8
+```
 
-# Paragraphs
-nonwordgen paragraphs -p 2 --min-sentences 2 --max-sentences 4 --language german
+Paragraphs:
 
-# Launch GUI (requires PyQt6)
+```bash
+nonwordgen paragraphs -p 2 --language german --min-sentences 2 --max-sentences 4
+```
+
+Launch GUI:
+
+```bash
 nonwordgen gui
 ```
 
-## Languages
+---
 
-Available plugins: `english` (default), `spanish`, `french`, `portuguese`, `indonesian`, `swahili`, `german`, `turkish`, `russian`, `vietnamese`, `hindi`, `korean`, `italian`, `dutch`, `tagalog`, `romanian`, `swedish`, `norwegian`, `danish`, `afrikaans`, `yoruba`, `polish`, `czech`, `hungarian`, `greek`, `thai`, `hebrew`, `scb`, and `malay`. The CLI lists valid options via `--help`, and the Python API exposes `nonwordgen.available_languages()` if you need to inspect them programmatically.
+## 🌍 Supported Languages
 
-## Optional dependencies
+`nonwordgen` includes plugins for:
 
-The package works out of the box with a small built-in dictionary. Installing the optional extras improves real-word detection:
+**english**, **spanish**, **french**, **portuguese**, **indonesian**,
+**swahili**, **german**, **turkish**, **russian**, **vietnamese**,
+**hindi**, **korean**, **italian**, **dutch**, **tagalog**, **romanian**,
+**swedish**, **norwegian**, **danish**, **afrikaans**, **yoruba**,
+**polish**, **czech**, **hungarian**, **greek**, **thai**, **hebrew**,
+**scb**, **malay**
 
-- `wordfreq` enables frequency-based filtering (install via `pip install "nonwordgen[dictionaries]"`).
-- `wordset` contributes a larger English word list if you happen to have that package available separately.
-- `PyQt6` enables the GUI (`pip install "nonwordgen[gui]"`).
+To inspect programmatically:
 
-## Development
+```python
+import nonwordgen
+print(nonwordgen.available_languages())
+```
 
-Run the test suite with:
+---
+
+## 📦 Optional Dependencies
+
+These are **optional** and must be installed separately if desired:
+
+* `wordfreq` — frequency-based dictionary filtering
+* `wordset` — larger English word list (if present on your system)
+* `PyQt6` — enables the GUI
+
+Install one or more manually:
+
+```bash
+pip install wordfreq
+pip install PyQt6
+```
+
+---
+
+## 🛠 Development
+
+Run tests:
 
 ```bash
 pytest
 ```
 
-To build distributable artifacts (wheel + sdist) locally:
+Build distributable packages:
 
 ```bash
 python -m pip install --upgrade build
 python -m build
 ```
 
-The resulting files will be written to `dist/` and can be uploaded to an index such as PyPI with a tool like `twine`.
+Artifacts appear under `dist/`.
 
-## Release process
+---
 
-nonwordgen uses a standard Python packaging and GitHub-based release flow.
+## 📤 Release Process (GitHub Only)
 
-1. Choose a new version  
-   - Decide the next version number (for example `0.2.0`).  
-   - Edit `nonwordgen/__init__.py` and update `__version__ = "0.2.0"`.  
-   - Optionally update the README or changelog to describe the changes.
+1. Update version in `nonwordgen/__init__.py`
+2. Run tests & build artifacts
+3. Commit → tag → push
+4. Draft a GitHub Release
 
-2. Run tests and build artifacts  
-   ```bash
-   pytest
-   python -m pip install --upgrade build
-   python -m build
-   ```
-   - This creates `dist/nonwordgen-<version>-py3-none-any.whl` and `dist/nonwordgen-<version>.tar.gz`.
+   * Upload `.whl` and `.tar.gz` files
+   * Add changelog notes
 
-3. Commit and tag the release  
-   ```bash
-   git status
-   git add nonwordgen/__init__.py README.md
-   git commit -m "Release v0.2.0"
-   git tag -a v0.2.0 -m "Release v0.2.0"
-   git push origin main --tags
-   ```
+No PyPI steps required unless you publish there later.
 
-4. Create a GitHub Release  
-   - In the GitHub UI, go to “Releases” → “Draft a new release”.  
-   - Select the tag you just pushed (e.g. `v0.2.0`) or create it there.  
-   - Set the release title (for example `nonwordgen v0.2.0`) and description (high‑level changelog).  
-   - Attach the built artifacts from `dist/` (`.whl` and `.tar.gz`) so users can download them directly.  
-   - Publish the release.
+---
 
-5. (Optional) Upload to PyPI  
-   ```bash
-   python -m pip install --upgrade twine
-   python -m twine upload dist/*
-   ```
-   - This makes the new version installable via `pip install nonwordgen` and `pip install "nonwordgen[gui]"`, etc.
+## 📄 License
 
-All package data (including the GUI icon under `nonwordgen/assets/`) is included automatically in the built distributions by virtue of the `pyproject.toml` and `MANIFEST.in` configuration.
+MIT License — see `LICENSE`.
 
-## License
+---
 
-Released under the MIT License. See `LICENSE` for details.
+## 🤖 AI Disclosure
 
-For licensing details of bundled or optional dependencies, see
-`THIRD_PARTY.md`.
+Some documentation and text were drafted with assistance from OpenAI models and reviewed manually.
 
-## AI disclosures
+---
 
-Parts of the project documentation and build guidance were drafted with generative AI assistance (OpenAI’s models) and reviewed before publication.
+## 📚 Third-Party Notices
 
-## Third-party notices
+* **PyQt6** — GUI backend
+* **wordfreq** — MIT licensed
+* **wordset** — optional, external word list
 
-- **PyQt6** (GUI) – provided by The Qt Company under the GNU GPL v3 (or a commercial license) and LGPL-compatible runtime components; install via `pip install PyQt6>=6.5`.
-- **wordfreq** (dictionary filtering) – MIT licensed; install via `pip install "nonwordgen[dictionaries]"`.
-- **wordset** (optional large English word list) – follow that project’s license when you include it (it is treated as an optional, external dependency).
-
-The optional extras above are not bundled in the base package but are clearly documented so users can install them when needed; their respective distributions contain the full license text you can inspect on PyPI or their source repositories. Any additional third-party assets (language inventories, help icon) ship under their original license via the hosting packages.
+All optional extras are installed separately and not bundled by default.
