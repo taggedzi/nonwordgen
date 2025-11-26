@@ -162,12 +162,19 @@ class MainWindow:  # pragma: no cover - GUI heavy
             )
             dialog.setIconPixmap(scaled)
 
-        github_url = "https://github.com/your-username/your-repo"
+        github_url = "https://github.com/taggedzi/nonwordgen"
         text = (
             "nonwordgen\n"
             f"Version: {__version__}\n\n"
             "Generate pseudo-words and text using language-aware phonotactics.\n\n"
-            f"GitHub: {github_url}"
+            f"Source code (MIT) and build instructions are available at:\n"
+            f"{github_url}\n\n"
+            "This application binary bundles third-party components, including "
+            "PyQt6 (GPLv3) and other libraries under their respective licenses. "
+            "By distributing this binary you are also granted the rights "
+            "to study, modify, and redistribute the corresponding source code "
+            "under the terms of the MIT license for this project and the "
+            "licenses of the included third-party components."
         )
         dialog.setText(text)
         dialog.exec()

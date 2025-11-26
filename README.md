@@ -130,6 +130,9 @@ All package data (including the GUI icon under `nonwordgen/assets/`) is included
 
 Released under the MIT License. See `LICENSE` for details.
 
+For licensing details of bundled or optional dependencies, see
+`THIRD_PARTY.md`.
+
 ## AI disclosures
 
 Parts of the project documentation and build guidance were drafted with generative AI assistance (OpenAI’s models) and reviewed before publication.
