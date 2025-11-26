@@ -1,6 +1,8 @@
 """PyQt-based graphical interface for nonwordgen."""
 from __future__ import annotations
 
+import contextlib
+import locale
 import sys
 from functools import partial
 from typing import Callable
@@ -57,6 +59,65 @@ def _lazy_import_qt():  # pragma: no cover - import guard
     }
 
 
+def _detect_default_language() -> str | None:
+    """Best-effort detection of a suitable default language.
+
+    Uses the operating system locale and maps it to one of the
+    registered language plugin identifiers when possible.
+    """
+    # Map ISO language codes to plugin names
+    locale_map = {
+        "en": "english",
+        "es": "spanish",
+        "fr": "french",
+        "pt": "portuguese",
+        "id": "indonesian",
+        "sw": "swahili",
+        "de": "german",
+        "tr": "turkish",
+        "ru": "russian",
+        "vi": "vietnamese",
+        "hi": "hindi",
+        "ko": "korean",
+        "it": "italian",
+        "nl": "dutch",
+        "tl": "tagalog",
+        "ro": "romanian",
+        "sv": "swedish",
+        "no": "norwegian",
+        "da": "danish",
+        "af": "afrikaans",
+        "yo": "yoruba",
+        "pl": "polish",
+        "cs": "czech",
+        "hu": "hungarian",
+        "el": "greek",
+        "th": "thai",
+        "he": "hebrew",
+        "ms": "malay",
+    }
+
+    try:
+        # Try current locale first
+        lang, _ = locale.getlocale()
+        if not lang:
+            # Fall back to default locale if necessary
+            with contextlib.suppress(Exception):
+                lang, _ = locale.getdefaultlocale()  # type: ignore[deprecated-call]
+    except Exception:
+        lang = None
+
+    if not lang:
+        return None
+
+    # Normalize values like "en_US", "en-US", etc.
+    language_code = lang.split(".", 1)[0]
+    language_code = language_code.replace("-", "_")
+    language_code = language_code.split("_", 1)[0].lower()
+
+    return locale_map.get(language_code)
+
+
 class MainWindow:  # pragma: no cover - GUI heavy
     def __init__(self) -> None:
         qt = _lazy_import_qt()
@@ -100,6 +161,16 @@ class MainWindow:  # pragma: no cover - GUI heavy
         self.language_combo = QComboBox()
         for lang in available_languages():
             self.language_combo.addItem(lang, lang)
+        # Try to select a sensible default language based on system locale,
+        # falling back to English if detection fails.
+        detected_language = _detect_default_language()
+        index = -1
+        if detected_language is not None:
+            index = self.language_combo.findData(detected_language)
+        if index == -1:
+            index = self.language_combo.findData("english")
+        if index != -1:
+            self.language_combo.setCurrentIndex(index)
         control_layout.addWidget(QLabel("Language"))
         control_layout.addWidget(self.language_combo)
 
@@ -162,12 +233,19 @@ class MainWindow:  # pragma: no cover - GUI heavy
             )
             dialog.setIconPixmap(scaled)
 
-        github_url = "https://github.com/your-username/your-repo"
+        github_url = "https://github.com/taggedzi/nonwordgen"
         text = (
             "nonwordgen\n"
             f"Version: {__version__}\n\n"
             "Generate pseudo-words and text using language-aware phonotactics.\n\n"
-            f"GitHub: {github_url}"
+            f"Source code (MIT) and build instructions are available at:\n"
+            f"{github_url}\n\n"
+            "This application binary bundles third-party components, including "
+            "PyQt6 (GPLv3) and other libraries under their respective licenses. "
+            "By distributing this binary you are also granted the rights "
+            "to study, modify, and redistribute the corresponding source code "
+            "under the terms of the MIT license for this project and the "
+            "licenses of the included third-party components."
         )
         dialog.setText(text)
         dialog.exec()
