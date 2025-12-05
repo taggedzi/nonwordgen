@@ -1,4 +1,5 @@
 """Configuration helpers bridging user-facing APIs and language plugins."""
+
 from __future__ import annotations
 
 from .dictionary_base import DictionaryBackend

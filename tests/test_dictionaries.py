@@ -1,10 +1,13 @@
 from __future__ import annotations
 
-import pytest
-
 import nonwordgen.dictionaries as dictionaries_module
+import pytest
+from nonwordgen.dictionaries import (
+    BuiltinCommonWordsDictionary,
+    CompositeDictionary,
+    WordfreqDictionary,
+)
 from nonwordgen.dictionary_base import DictionaryBackend
-from nonwordgen.dictionaries import BuiltinCommonWordsDictionary, CompositeDictionary, WordfreqDictionary
 
 
 class FakeDictionary(DictionaryBackend):

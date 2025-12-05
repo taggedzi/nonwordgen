@@ -1,4 +1,5 @@
 """Language plugin protocols for nonwordgen."""
+
 from __future__ import annotations
 
 import abc

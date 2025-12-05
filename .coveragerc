@@ -1,0 +1,31 @@
+[run]
+source =
+    nonwordgen
+branch = True
+parallel = True
+omit =
+    tests/*
+    */tests/*
+    noxfile.py
+    build_release.py
+    build-nonwords-gen.bat
+    nonwords-gen.spec
+    setup.py
+    .nox/*
+    dist/*
+    build/*
+
+[report]
+show_missing = True
+skip_empty = True
+fail_under = 70
+exclude_lines =
+    pragma: no cover
+    if TYPE_CHECKING:
+
+[xml]
+output = coverage.xml
+
+[html]
+directory = htmlcov
+

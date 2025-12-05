@@ -3,10 +3,10 @@ from __future__ import annotations
 import random
 
 import nonwordgen.textgen as textgen
+from nonwordgen.dictionary_base import DictionaryBackend
 from nonwordgen.generator import WordGenerator
 from nonwordgen.language_base import LanguagePlugin
 from nonwordgen.strictness import Strictness
-from nonwordgen.dictionary_base import DictionaryBackend
 
 
 class DummyDictionary(DictionaryBackend):
@@ -61,4 +61,6 @@ def test_generate_paragraphs_chain_sentences() -> None:
     for paragraph in paragraphs:
         # Each paragraph should end with punctuation from the final sentence
         assert paragraph[-1] in textgen.PUNCTUATION
-        assert len(paragraph.split()) >= 4  # two sentences of two words each, plus punctuation
+        assert (
+            len(paragraph.split()) >= 4
+        )  # two sentences of two words each, plus punctuation

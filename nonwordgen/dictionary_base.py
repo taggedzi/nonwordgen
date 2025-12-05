@@ -1,4 +1,5 @@
 """Dictionary backend abstractions."""
+
 from __future__ import annotations
 
 import abc
