@@ -88,7 +88,18 @@ class WordfreqDictionary(DictionaryBackend):
     def is_real_word(self, word: str) -> bool:
         if not self._available or zipf_frequency is None:
             return False
-        score = zipf_frequency(word, self.language)
+        try:
+            score = zipf_frequency(word, self.language)
+        except Exception:
+            # If wordfreq is installed but its data files are missing or broken,
+            # degrade gracefully instead of crashing the generator.
+            logger.warning(
+                "wordfreq lookup failed for language '%s'; disabling WordfreqDictionary.",
+                self.language,
+                exc_info=True,
+            )
+            self._available = False
+            return False
         return score >= self.real_word_min_zipf
 
 

@@ -12,20 +12,34 @@
 block_cipher = None
 
 
-from PyInstaller.utils.hooks import collect_submodules
+from PyInstaller.utils.hooks import collect_submodules, collect_data_files
 
 
 hidden_imports = collect_submodules("nonwordgen.languages")
 
+# Collect data files for wordfreq (if installed) so its frequency tables
+# are available inside the frozen binary for strict dictionary modes.
+try:
+    wordfreq_datas = collect_data_files("wordfreq")
+except Exception:
+    wordfreq_datas = []
+
 
 a = Analysis(
-    ["run_gui.py"],
+    ["nonwordgen/gui.py"],
     pathex=[],
     binaries=[],
     datas=[
         # Ensure the GUI icon image is available at runtime for importlib.resources
         ("nonwordgen/assets/nonword-gen.png", "nonwordgen/assets"),
-    ],
+        # Bundle license and third-party notice files alongside the binary
+        ("LICENSE", "."),
+        ("THIRD_PARTY.md", "."),
+        ("README.md", "."),
+        ("licenses/wordfreq-LICENSE.txt", "licenses"),
+        ("licenses/wordfreq-NOTICE.txt", "licenses"),
+    ]
+    + wordfreq_datas,
     hiddenimports=hidden_imports,
     hookspath=[],
     hooksconfig={},
