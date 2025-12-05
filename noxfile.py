@@ -10,7 +10,7 @@ import nox
 from nox.command import CommandFailed
 
 ROOT = Path(__file__).resolve().parent
-PYTHON_VERSIONS = ["3.11"]
+PYTHON_VERSIONS = ["3.11", "3.12"]
 
 
 def _detect_package_name() -> str:
