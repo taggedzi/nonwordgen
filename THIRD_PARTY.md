@@ -30,23 +30,13 @@ and GPL-compatible.
   lookups, used when the `dictionaries` extra is installed.
 - **Package**: `wordfreq`
 - **Upstream**: https://github.com/rspeer/wordfreq
-- **License**: MIT License
+- **License**: Apache License 2.0 (see the upstream `LICENSE` file or
+  the bundled `licenses/wordfreq-LICENSE.txt` for the full text).
 
-If you install and redistribute `wordfreq` with your own builds, you
-should include the MIT license notice from that project.
-
-## wordset
-
-- **Purpose**: Optional large English word list; treated as an
-  external, optional dependency.
-- **Package**: `wordset`
-- **Upstream**: See the `wordset` project on PyPI or its source
-  repository for details.
-- **License**: Refer to the `wordset` project for the current license
-  terms.
-
-`wordset` is not required for normal use and is not bundled by default;
-follow that project’s license if you choose to include it.
+If you install and redistribute `wordfreq` with your own builds
+(including in binary form), you must retain its Apache-2.0 license
+text and include its NOTICE information (see `licenses/wordfreq-NOTICE.txt`)
+alongside your own license information.
 
 ## PyInstaller
 

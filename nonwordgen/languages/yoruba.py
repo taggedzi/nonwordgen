@@ -5,12 +5,7 @@ import logging
 import random
 
 from ..dictionary_base import DictionaryBackend
-from ..dictionaries import (
-    CompositeDictionary,
-    StaticWordSetDictionary,
-    WordfreqDictionary,
-    WordsetDictionary,
-)
+from ..dictionaries import CompositeDictionary, StaticWordSetDictionary, WordfreqDictionary
 from ..language_base import LanguagePlugin
 from ..phonotactics import build_candidate_from_profile
 from ..strictness import Strictness
@@ -138,16 +133,6 @@ class YorubaLanguagePlugin(LanguagePlugin):
             else:
                 logger.warning(
                     "wordfreq backend unavailable for Yoruba; %s strictness is degraded.",
-                    strictness.value,
-                )
-
-        if strictness in {Strictness.STRICT, Strictness.VERY_STRICT}:
-            wordset_backend = WordsetDictionary(language="yo")
-            if getattr(wordset_backend, "available", False):
-                backends.append(wordset_backend)
-            else:
-                logger.warning(
-                    "wordset backend unavailable for Yoruba; %s strictness is degraded.",
                     strictness.value,
                 )
 

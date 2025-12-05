@@ -5,12 +5,7 @@ import logging
 import random
 
 from ..dictionary_base import DictionaryBackend
-from ..dictionaries import (
-    BuiltinCommonWordsDictionary,
-    CompositeDictionary,
-    WordfreqDictionary,
-    WordsetDictionary,
-)
+from ..dictionaries import BuiltinCommonWordsDictionary, CompositeDictionary, WordfreqDictionary
 from ..language_base import LanguagePlugin
 from ..phonotactics import build_candidate as english_build_candidate
 from ..strictness import Strictness
@@ -49,16 +44,6 @@ class EnglishLanguagePlugin(LanguagePlugin):
             else:
                 logger.warning(
                     "wordfreq backend unavailable; %s strictness is degraded.",
-                    strictness.value,
-                )
-
-        if strictness in {Strictness.STRICT, Strictness.VERY_STRICT}:
-            wordset_backend = WordsetDictionary()
-            if getattr(wordset_backend, "available", False):
-                backends.append(wordset_backend)
-            else:
-                logger.warning(
-                    "wordset backend unavailable; %s strictness is degraded.",
                     strictness.value,
                 )
 

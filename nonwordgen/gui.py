@@ -241,7 +241,7 @@ class MainWindow:  # pragma: no cover - GUI heavy
             f"Source code (MIT) and build instructions are available at:\n"
             f"{github_url}\n\n"
             "This application binary bundles third-party components, including "
-            "PyQt6 (GPLv3) and other libraries under their respective licenses. "
+            "PyQt6 (GPLv3), wordfreq (Apache-2.0), and other libraries under their respective licenses. "
             "By distributing this binary you are also granted the rights "
             "to study, modify, and redistribute the corresponding source code "
             "under the terms of the MIT license for this project and the "

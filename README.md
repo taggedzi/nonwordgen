@@ -134,7 +134,6 @@ print(nonwordgen.available_languages())
 These are **optional** and must be installed separately if desired:
 
 * `wordfreq` — frequency-based dictionary filtering
-* `wordset` — larger English word list (if present on your system)
 * `PyQt6` — enables the GUI
 
 Install one or more manually:
@@ -194,7 +193,6 @@ Some documentation and text were drafted with assistance from OpenAI models and 
 ## 📚 Third-Party Notices
 
 * **PyQt6** — GUI backend
-* **wordfreq** — MIT licensed
-* **wordset** — optional, external word list
+* **wordfreq** — Apache-2.0 licensed
 
 All optional extras are installed separately and not bundled by default.
