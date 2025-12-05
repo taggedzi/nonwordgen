@@ -36,6 +36,7 @@ dev = [
 
 [project.scripts]
 nonwordgen = "nonwordgen.cli:main"
+nonwordgen-gui = "nonwordgen.gui:main"
 
 [tool.setuptools]
 include-package-data = true

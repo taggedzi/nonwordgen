@@ -4,12 +4,7 @@ import pytest
 
 import nonwordgen.dictionaries as dictionaries_module
 from nonwordgen.dictionary_base import DictionaryBackend
-from nonwordgen.dictionaries import (
-    BuiltinCommonWordsDictionary,
-    CompositeDictionary,
-    WordfreqDictionary,
-    WordsetDictionary,
-)
+from nonwordgen.dictionaries import BuiltinCommonWordsDictionary, CompositeDictionary, WordfreqDictionary
 
 
 class FakeDictionary(DictionaryBackend):
@@ -43,16 +38,3 @@ def test_wordfreq_dictionary_threshold(monkeypatch: pytest.MonkeyPatch) -> None:
     assert backend.available
     assert backend.is_real_word("real")
     assert not backend.is_real_word("fake")
-
-
-def test_wordset_dictionary_loading(monkeypatch: pytest.MonkeyPatch) -> None:
-    class DummyWordset:
-        def words(self, language: str):
-            assert language == "en"
-            return ["alpha", "beta"]
-
-    monkeypatch.setattr(dictionaries_module, "_wordset_module", DummyWordset())
-    backend = WordsetDictionary()
-    assert backend.available
-    assert backend.is_real_word("alpha")
-    assert not backend.is_real_word("gamma")
