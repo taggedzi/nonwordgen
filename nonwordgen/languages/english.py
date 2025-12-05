@@ -1,11 +1,16 @@
 """English language plugin implementation."""
+
 from __future__ import annotations
 
 import logging
 import random
 
+from ..dictionaries import (
+    BuiltinCommonWordsDictionary,
+    CompositeDictionary,
+    WordfreqDictionary,
+)
 from ..dictionary_base import DictionaryBackend
-from ..dictionaries import BuiltinCommonWordsDictionary, CompositeDictionary, WordfreqDictionary
 from ..language_base import LanguagePlugin
 from ..phonotactics import build_candidate as english_build_candidate
 from ..strictness import Strictness

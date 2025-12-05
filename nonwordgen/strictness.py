@@ -1,4 +1,5 @@
 """Strictness levels shared across language plugins."""
+
 from __future__ import annotations
 
 from enum import Enum

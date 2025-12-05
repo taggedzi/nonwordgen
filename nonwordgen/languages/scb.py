@@ -1,11 +1,16 @@
 """Serbian/Croatian/Bosnian language plugin implementation (Latin script)."""
+
 from __future__ import annotations
 
 import logging
 import random
 
+from ..dictionaries import (
+    CompositeDictionary,
+    StaticWordSetDictionary,
+    WordfreqDictionary,
+)
 from ..dictionary_base import DictionaryBackend
-from ..dictionaries import CompositeDictionary, StaticWordSetDictionary, WordfreqDictionary
 from ..language_base import LanguagePlugin
 from ..phonotactics import build_candidate_from_profile
 from ..strictness import Strictness
@@ -167,7 +172,9 @@ class SCBLanguagePlugin(LanguagePlugin):
             if strictness == Strictness.VERY_STRICT:
                 threshold = min(real_word_min_zipf, 2.0)
             # Use Croatian as representative language code for frequencies
-            wordfreq_backend = WordfreqDictionary(real_word_min_zipf=threshold, language="hr")
+            wordfreq_backend = WordfreqDictionary(
+                real_word_min_zipf=threshold, language="hr"
+            )
             if getattr(wordfreq_backend, "available", False):
                 backends.append(wordfreq_backend)
             else:

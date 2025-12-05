@@ -147,20 +147,31 @@ pip install PyQt6
 
 ## 🛠 Development
 
-Run tests:
+Install dev dependencies and nox:
 
 ```bash
-pytest
+python -m pip install -e ".[dev]"
+python -m pip install nox
 ```
 
-Build distributable packages:
+Common tasks via nox:
 
 ```bash
-python -m pip install --upgrade build
-python -m build
+nox                  # run default sessions (tests + lint)
+nox -s tests         # run test suite
+nox -s coverage      # run tests with coverage + coverage.xml
+nox -s lint          # run Ruff lint checks
+nox -s lint_fix      # auto-fix with Ruff + Black
+nox -s format        # format code with Black
+nox -s typecheck     # run mypy
+nox -s build         # build GUI release via build_release.py
+nox -s build_package # build wheel + sdist into dist/
+nox -s build_exe     # build standalone Windows EXE (no-op on non-Windows)
 ```
 
-Artifacts appear under `dist/`.
+You can still run `pytest` or `python -m build` directly if you prefer, but the GitHub Actions CI uses the nox sessions above so you can reproduce CI locally with the same commands.
+
+Artifacts from builds appear under `dist/` (wheels/sdists from `build_package`, and the Windows executable from `build` / `build_exe`).
 
 ---
 

@@ -1,17 +1,18 @@
 """Dictionary backend implementations."""
+
 from __future__ import annotations
 
 import logging
-from typing import Any, Iterable, Sequence
+from typing import Iterable, Sequence
 
 from .dictionary_base import DictionaryBackend
 
 logger = logging.getLogger(__name__)
 
 try:  # pragma: no cover - optional dependency
-    from wordfreq import zipf_frequency  # type: ignore
+    from wordfreq import zipf_frequency
 except Exception:  # pragma: no cover - optional dependency
-    zipf_frequency = None  # type: ignore[assignment]
+    zipf_frequency = None
 
 
 class BuiltinCommonWordsDictionary(DictionaryBackend):

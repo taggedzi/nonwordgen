@@ -1,4 +1,5 @@
 """Syllable-based candidate builder for pseudo-English words."""
+
 from __future__ import annotations
 
 import random

@@ -1,0 +1,13 @@
+# Ruff configuration for the nonwordgen project.
+# This keeps linting fast and consistent with Black while catching common bugs.
+
+line-length = 88
+target-version = "py311"
+src = ["nonwordgen", "tests"]
+extend-exclude = ["build", "dist", ".nox", ".venv"]
+
+[lint]
+select = ["E", "F", "I", "B"]
+# Let Black handle most formatting concerns and avoid overly noisy line-length warnings.
+ignore = ["E501"]
+

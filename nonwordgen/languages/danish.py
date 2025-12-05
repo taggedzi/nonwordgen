@@ -1,11 +1,16 @@
 """Danish language plugin implementation."""
+
 from __future__ import annotations
 
 import logging
 import random
 
+from ..dictionaries import (
+    CompositeDictionary,
+    StaticWordSetDictionary,
+    WordfreqDictionary,
+)
 from ..dictionary_base import DictionaryBackend
-from ..dictionaries import CompositeDictionary, StaticWordSetDictionary, WordfreqDictionary
 from ..language_base import LanguagePlugin
 from ..phonotactics import build_candidate_from_profile
 from ..strictness import Strictness
@@ -158,13 +163,17 @@ class DanishLanguagePlugin(LanguagePlugin):
         strictness: Strictness,
         real_word_min_zipf: float = 2.7,
     ) -> DictionaryBackend:
-        backends: list[DictionaryBackend] = [StaticWordSetDictionary(COMMON_DANISH_WORDS)]
+        backends: list[DictionaryBackend] = [
+            StaticWordSetDictionary(COMMON_DANISH_WORDS)
+        ]
 
         if strictness in {Strictness.MEDIUM, Strictness.STRICT, Strictness.VERY_STRICT}:
             threshold = real_word_min_zipf
             if strictness == Strictness.VERY_STRICT:
                 threshold = min(real_word_min_zipf, 2.0)
-            wordfreq_backend = WordfreqDictionary(real_word_min_zipf=threshold, language="da")
+            wordfreq_backend = WordfreqDictionary(
+                real_word_min_zipf=threshold, language="da"
+            )
             if getattr(wordfreq_backend, "available", False):
                 backends.append(wordfreq_backend)
             else:

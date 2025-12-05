@@ -1,39 +1,39 @@
 """Language plugin registry and helpers."""
+
 from __future__ import annotations
 
 from typing import Dict
 
 from ..language_base import LanguagePlugin
+from .afrikaans import AfrikaansLanguagePlugin
+from .czech import CzechLanguagePlugin
+from .danish import DanishLanguagePlugin
+from .dutch import DutchLanguagePlugin
 from .english import EnglishLanguagePlugin
 from .french import FrenchLanguagePlugin
 from .german import GermanLanguagePlugin
+from .greek import GreekLanguagePlugin
+from .hebrew import HebrewLanguagePlugin
 from .hindi import HindiLanguagePlugin
+from .hungarian import HungarianLanguagePlugin
 from .indonesian import IndonesianLanguagePlugin
 from .italian import ItalianLanguagePlugin
-from .tagalog import TagalogLanguagePlugin
 from .korean import KoreanLanguagePlugin
-from .portuguese import PortugueseLanguagePlugin
-from .spanish import SpanishLanguagePlugin
-from .swahili import SwahiliLanguagePlugin
-from .turkish import TurkishLanguagePlugin
-from .russian import RussianLanguagePlugin
-from .vietnamese import VietnameseLanguagePlugin
-from .dutch import DutchLanguagePlugin
-from .romanian import RomanianLanguagePlugin
-from .swedish import SwedishLanguagePlugin
-from .norwegian import NorwegianLanguagePlugin
-from .danish import DanishLanguagePlugin
-from .afrikaans import AfrikaansLanguagePlugin
-from .yoruba import YorubaLanguagePlugin
-from .polish import PolishLanguagePlugin
-from .czech import CzechLanguagePlugin
-from .hungarian import HungarianLanguagePlugin
-from .greek import GreekLanguagePlugin
-from .thai import ThaiLanguagePlugin
-from .hebrew import HebrewLanguagePlugin
-from .scb import SCBLanguagePlugin
 from .malay import MalayLanguagePlugin
 from .norwegian import NorwegianLanguagePlugin
+from .polish import PolishLanguagePlugin
+from .portuguese import PortugueseLanguagePlugin
+from .romanian import RomanianLanguagePlugin
+from .russian import RussianLanguagePlugin
+from .scb import SCBLanguagePlugin
+from .spanish import SpanishLanguagePlugin
+from .swahili import SwahiliLanguagePlugin
+from .swedish import SwedishLanguagePlugin
+from .tagalog import TagalogLanguagePlugin
+from .thai import ThaiLanguagePlugin
+from .turkish import TurkishLanguagePlugin
+from .vietnamese import VietnameseLanguagePlugin
+from .yoruba import YorubaLanguagePlugin
 
 _REGISTERED_PLUGINS: Dict[str, LanguagePlugin] = {}
 

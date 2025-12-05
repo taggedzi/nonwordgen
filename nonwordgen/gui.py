@@ -1,12 +1,11 @@
 """PyQt-based graphical interface for nonwordgen."""
+
 from __future__ import annotations
 
 import contextlib
 import locale
 import sys
 from functools import partial
-from typing import Callable
-
 from importlib import resources
 
 from . import __version__
@@ -18,6 +17,8 @@ from .textgen import generate_paragraphs, generate_sentences
 
 def _lazy_import_qt():  # pragma: no cover - import guard
     try:
+        from PyQt6.QtCore import Qt
+        from PyQt6.QtGui import QIcon, QPixmap
         from PyQt6.QtWidgets import (
             QApplication,
             QCheckBox,
@@ -27,17 +28,17 @@ def _lazy_import_qt():  # pragma: no cover - import guard
             QLabel,
             QMainWindow,
             QMessageBox,
+            QPlainTextEdit,
             QPushButton,
             QSpinBox,
             QTabWidget,
             QVBoxLayout,
             QWidget,
-            QPlainTextEdit,
         )
-        from PyQt6.QtCore import Qt
-        from PyQt6.QtGui import QIcon, QPixmap
     except Exception as exc:  # pragma: no cover - import guard
-        raise ImportError("PyQt6 is required for the GUI. Install via 'pip install PyQt6'.") from exc
+        raise ImportError(
+            "PyQt6 is required for the GUI. Install via 'pip install PyQt6'."
+        ) from exc
     return {
         "QApplication": QApplication,
         "QCheckBox": QCheckBox,
@@ -103,7 +104,7 @@ def _detect_default_language() -> str | None:
         if not lang:
             # Fall back to default locale if necessary
             with contextlib.suppress(Exception):
-                lang, _ = locale.getdefaultlocale()  # type: ignore[deprecated-call]
+                lang, _ = locale.getdefaultlocale()
     except Exception:
         lang = None
 

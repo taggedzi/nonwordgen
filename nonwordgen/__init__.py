@@ -1,4 +1,5 @@
 """Public API for the nonwordgen package."""
+
 from __future__ import annotations
 
 from .config import Strictness, build_dictionary_for_strictness
@@ -7,10 +8,10 @@ from .generator import WordGenerator
 from .language_base import LanguagePlugin
 from .languages import available_languages, get_language_plugin
 from .textgen import (
-    generate_sentence,
-    generate_sentences,
     generate_paragraph,
     generate_paragraphs,
+    generate_sentence,
+    generate_sentences,
 )
 
 __all__ = [

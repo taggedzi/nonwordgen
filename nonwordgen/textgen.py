@@ -1,8 +1,8 @@
 """Higher-level text generation helpers built atop WordGenerator."""
+
 from __future__ import annotations
 
 import random
-from typing import Iterable
 
 from .generator import WordGenerator
 
@@ -75,7 +75,9 @@ def generate_paragraphs(
     if count < 1:
         raise ValueError("count must be at least 1")
     return [
-        generate_paragraph(generator, min_sentences, max_sentences, min_words, max_words)
+        generate_paragraph(
+            generator, min_sentences, max_sentences, min_words, max_words
+        )
         for _ in range(count)
     ]
 

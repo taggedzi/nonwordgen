@@ -4,7 +4,6 @@ import random
 from typing import Iterable, Iterator, Optional, Sequence
 
 import pytest
-
 from nonwordgen.dictionary_base import DictionaryBackend
 from nonwordgen.generator import WordGenerator
 from nonwordgen.language_base import LanguagePlugin
@@ -122,7 +121,9 @@ def test_syllable_arguments_forwarded() -> None:
             captured["min"] = min_syllables
             captured["max"] = max_syllables
             captured["len"] = max_length
-            return super().build_candidate(rng, min_syllables, max_syllables, max_length)
+            return super().build_candidate(
+                rng, min_syllables, max_syllables, max_length
+            )
 
     plugin = RecordingPlugin(["slorn"])
     gen = WordGenerator(
@@ -159,7 +160,9 @@ def test_dictionary_and_allow_real_words_flag() -> None:
 
 
 def test_spanish_language_plugin_generates_words() -> None:
-    gen = WordGenerator(allow_real_words=True, rng=random.Random(9876), language="spanish")
+    gen = WordGenerator(
+        allow_real_words=True, rng=random.Random(9876), language="spanish"
+    )
     word = gen.generate_one()
     assert isinstance(word, str)
     assert len(word) >= 2
@@ -201,7 +204,9 @@ def test_available_languages_list() -> None:
 
 
 def test_french_language_plugin_generates_words() -> None:
-    gen = WordGenerator(allow_real_words=True, rng=random.Random(1234), language="french")
+    gen = WordGenerator(
+        allow_real_words=True, rng=random.Random(1234), language="french"
+    )
     word = gen.generate_one()
     assert isinstance(word, str)
     assert len(word) >= 2
