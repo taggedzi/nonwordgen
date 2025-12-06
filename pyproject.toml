@@ -4,13 +4,13 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "nonwordgen"
+version = "1.0.1"
 description = "Generate English-like non-words with configurable strictness."
 readme = "README.md"
 authors = [{name = "Matthew Craig", email = "taggedzi.mpc@gmail.com"}]
 requires-python = ">=3.11"
 license = "MIT"
 dependencies = []
-dynamic = ["version"]
 keywords = ["generator", "language", "linguistics", "cli", "words"]
 classifiers = [
     "Development Status :: 4 - Beta",
@@ -51,6 +51,3 @@ include-package-data = true
 [tool.setuptools.packages.find]
 include = ["nonwordgen*"]
 exclude = ["tests*"]
-
-[tool.setuptools.dynamic]
-version = {attr = "nonwordgen.__version__"}

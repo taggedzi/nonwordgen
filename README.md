@@ -177,7 +177,7 @@ Artifacts from builds appear under `dist/` (wheels/sdists from `build_package`, 
 
 ## 📤 Release Process (GitHub Only)
 
-1. Update version in `nonwordgen/__init__.py`
+1. Update version in `pyproject.toml` (`[project].version`)
 2. Run tests & build artifacts
 3. Commit → tag → push
 4. Draft a GitHub Release
