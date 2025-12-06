@@ -1,6 +1,6 @@
 # nonwordgen
 
-> **nonwordgen** — because real words are overrated!
+> **nonwordgen** - because real words are overrated!
 
 ---
 
@@ -37,7 +37,7 @@
 
 ---
 
-`nonwordgen` is a multilingual text generator that creates **fake words, sentences, and paragraphs** that *look like* they belong to real languages — but aren’t.  
+`nonwordgen` is a multilingual text generator that creates **fake words, sentences, and paragraphs** that *look like* they belong to real languages - but aren’t.  
 It’s ideal for **lorem ipsum–style filler text**, **UI design**, **test data**, **creative writing**, or anywhere you need realistic-looking nonsense.
 
 Under the hood, it uses a **phonotactic syllable model**, **language plugins**, and **dictionary-based filters** to ensure generated text looks plausible while avoiding real vocabulary.  
@@ -179,8 +179,8 @@ print(nonwordgen.available_languages())
 
 These are **optional** and must be installed separately if desired:
 
-- `wordfreq` — frequency-based dictionary filtering
-- `PyQt6` — enables the GUI
+- `wordfreq` - frequency-based dictionary filtering
+- `PyQt6` - enables the GUI
 
 Install one or more manually:
 
@@ -207,17 +207,18 @@ python -m pip install nox
 Common tasks via nox:
 
 ```bash
-nox                  # run default sessions (tests + lint)
-nox -s tests         # run test suite
-nox -s coverage      # run tests with coverage + coverage.xml
-nox -s lint          # run Ruff lint checks
-nox -s lint_fix      # auto-fix with Ruff + Black
-nox -s format        # format code with Black
-nox -s typecheck     # run mypy
-nox -s build         # build GUI release via build_release.py
-nox -s build_package # build wheel + sdist into dist/
-nox -s build_dist    # Linux-only sdist + wheel build (CI-friendly)
-nox -s build_exe     # build standalone Windows EXE (no-op on non-Windows)
+nox                              # run default sessions (tests + lint)
+nox -s tests                     # run test suite
+nox -s coverage                  # run tests with coverage + coverage.xml
+nox -s lint                      # run Ruff lint checks
+nox -s format                    # auto-fix with Ruff + Black
+nox -s typecheck                 # run mypy
+nox -s build                     # build GUI release via build_release.py
+nox -s build_package             # build wheel + sdist into dist/
+nox -s build_dist                # Linux-only sdist + wheel build (CI-friendly)
+nox -s build_exe                 # build standalone Windows EXE (no-op on non-Windows)
+nox -s bundle_release            # bundles artifacts/files into a versioned Zip for release
+nox -s publish_release -- 1.2.1  # publishes a release, update changelog, commit, create tags, push to github for release generation
 ```
 
 You can still run `pytest` or `python -m build` directly if you prefer, but the GitHub Actions CI uses the nox sessions above so you can reproduce CI locally with the same commands.
@@ -242,7 +243,7 @@ No PyPI steps required unless you publish there later.
 
 ## 📄 License
 
-MIT License — see `LICENSE`.
+MIT License - see [LICENSE](./LICENSE).
 
 ---
 
@@ -254,7 +255,32 @@ Some documentation and text were drafted with assistance from OpenAI models and 
 
 ## 📚 Third-Party Notices
 
-- **PyQt6** — GUI backend
-- **wordfreq** — Apache-2.0 licensed
+- **PyQt6** - GUI backend
+- **wordfreq** - Apache-2.0 licensed
 
 All optional extras are installed separately and not bundled by default.
+
+---
+
+## 🤝 Code of Conduct
+
+This project follows a simple, respectful [Code of Conduct](./CODE_OF_CONDUCT.md).
+By participating, you agree to uphold these guidelines and help keep the community welcoming and constructive.
+
+---
+
+## 🛡 Security
+
+If you believe you’ve found a security issue, please review the project’s
+[Security Policy](./SECURITY.md).
+
+This project is maintained by a single developer with limited availability. I may not always be able to respond quickly, but I take security
+concerns seriously and appreciate responsible disclosure.
+
+---
+
+## 📜 Changelog
+
+For a history of changes, see the [Changelog](./CHANGELOG.md).
+
+The changelog is generated automatically from git tags and commit messages.

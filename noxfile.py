@@ -101,17 +101,10 @@ def lint(session: nox.Session) -> None:
 
 
 # Run Ruff with auto-fix, then Black formatting.
-@nox.session(name="lint_fix")
-def lint_fix(session: nox.Session) -> None:
-    session.install("ruff", "black")
-    session.run("ruff", "check", "--fix", *CODE_LOCATIONS)
-    session.run("black", *CODE_LOCATIONS)
-
-
-# Format code using Black.
 @nox.session
 def format(session: nox.Session) -> None:
-    session.install("black")
+    session.install("ruff", "black")
+    session.run("ruff", "check", "--fix", *CODE_LOCATIONS)
     session.run("black", *CODE_LOCATIONS)
 
 
@@ -201,8 +194,32 @@ def build_exe(session: nox.Session) -> None:
     raise RuntimeError("No .spec file or build_release.py found for EXE build.")
 
 
-@nox.session(name="release")
-def release(session: nox.Session) -> None:
+@nox.session
+def changelog(session: nox.Session) -> None:
+    """Regenerate CHANGELOG.md from git history."""
+    session.install("gitpython")  # not strictly needed if you keep the script as-is
+    session.run("python", "tools/generate_changelog.py", external=True)
+
+
+@nox.session
+def publish_release(session: nox.Session) -> None:
+    """
+    Create a tagged release and push it.
+
+    Usage:
+        nox -s make_release -- 1.2.1
+        nox -s make_release -- v1.2.1
+    """
+    if not session.posargs:
+        session.error("Usage: nox -s make_release -- <version>")
+
+    version = session.posargs[0]
+    session.run("python", "tools/make_release.py", version, external=True)
+
+
+
+@nox.session(name="bundle_release")
+def bundle_release(session: nox.Session) -> None:
     """
     Bundle the built Windows executable and related artifacts into a versioned
     zip file and generate a SHA-256 checksum.
