@@ -45,8 +45,23 @@ def build_binary() -> None:
 def make_zip() -> pathlib.Path:
     from nonwordgen import __version__  # import here so editable installs work
 
-    if not EXE_DIR.exists():
-        raise SystemExit(f"Expected build output directory not found: {EXE_DIR}")
+    exe_dir = EXE_DIR
+    exe_file = DIST_DIR / "nonwords-gen.exe"
+
+    if exe_dir.is_dir():
+        archive_root = exe_dir
+        base_dir = exe_dir
+        base_name = None
+    elif exe_file.is_file():
+        # PyInstaller one-file mode: only a single EXE in dist/.
+        # Zip just that executable so the release artifact remains a single download.
+        archive_root = DIST_DIR
+        base_dir = DIST_DIR
+        base_name = exe_file.name
+    else:
+        raise SystemExit(
+            f"Expected build output directory or EXE not found: {exe_dir} or {exe_file}"
+        )
 
     DIST_DIR.mkdir(exist_ok=True)
     archive_stem = DIST_DIR / f"nonwords-gen-{__version__}-windows"
@@ -56,7 +71,10 @@ def make_zip() -> pathlib.Path:
         archive_path.unlink()
 
     print(f"Creating release archive {archive_path} ...")
-    shutil.make_archive(str(archive_stem), "zip", EXE_DIR)
+    if base_name is None:
+        shutil.make_archive(str(archive_stem), "zip", base_dir)
+    else:
+        shutil.make_archive(str(archive_stem), "zip", base_dir, base_name)
     return archive_path
 
 
