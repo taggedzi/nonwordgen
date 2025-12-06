@@ -50,6 +50,16 @@ cd nonwordgen
 python -m pip install -e ".[dev]"
 ```
 
+Extras are available if you want GUI or dictionary support during development as well:
+
+```bash
+# GUI support
+python -m pip install ".[gui]"
+
+# Dictionary / wordfreq support
+python -m pip install ".[dictionaries]"
+```
+
 ---
 
 ## 🧩 Library Usage
@@ -102,6 +112,12 @@ Launch GUI:
 nonwordgen gui
 ```
 
+You can also launch the GUI directly via the separate entry point:
+
+```bash
+nonwordgen-gui
+```
+
 Select your language, chose your options and click generate!
 
 ![Screenshot](docs/images/nonwords-gen_screenshot.png)
@@ -140,6 +156,10 @@ Install one or more manually:
 ```bash
 pip install wordfreq
 pip install PyQt6
+
+# Or via extras when installing from source / editable:
+python -m pip install ".[dictionaries]"
+python -m pip install ".[gui]"
 ```
 
 ---
@@ -165,6 +185,7 @@ nox -s format        # format code with Black
 nox -s typecheck     # run mypy
 nox -s build         # build GUI release via build_release.py
 nox -s build_package # build wheel + sdist into dist/
+nox -s build_dist    # Linux-only sdist + wheel build (CI-friendly)
 nox -s build_exe     # build standalone Windows EXE (no-op on non-Windows)
 ```
 
