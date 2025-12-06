@@ -119,8 +119,8 @@ def typecheck(session: nox.Session) -> None:
 @nox.session
 def build(session: nox.Session) -> None:
     _install_project_editable(session)
-    # PyInstaller is required by build_release.py for the GUI binary.
-    session.install("pyinstaller")
+    # PyInstaller (and PyQt6) are required by build_release.py for the GUI binary.
+    session.install("pyinstaller", "PyQt6")
     script = _find_build_script()
     session.run("python", str(script))
 
@@ -148,7 +148,9 @@ def build_exe(session: nox.Session) -> None:
         return
 
     _install_project_editable(session)
-    session.install("pyinstaller")
+    # Ensure PyInstaller and PyQt6 are available so the GUI
+    # dependencies are correctly frozen into the executable.
+    session.install("pyinstaller", "PyQt6")
 
     dist_dir = ROOT / "dist"
     build_dir = ROOT / "build"

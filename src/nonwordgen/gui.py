@@ -8,11 +8,11 @@ import sys
 from functools import partial
 from importlib import resources
 
-from . import __version__
-from .config import Strictness
-from .generator import WordGenerator
-from .languages import available_languages
-from .textgen import generate_paragraphs, generate_sentences
+from nonwordgen import __version__
+from nonwordgen.config import Strictness
+from nonwordgen.generator import WordGenerator
+from nonwordgen.languages import available_languages
+from nonwordgen.textgen import generate_paragraphs, generate_sentences
 
 
 def _lazy_import_qt():  # pragma: no cover - import guard
@@ -434,7 +434,25 @@ def main() -> int:
     try:
         window = MainWindow()
     except ImportError as exc:  # pragma: no cover - import guard
-        sys.stderr.write(f"{exc}\n")
+        message = f"{exc}"
+        # In a console context, print a helpful error; in a frozen
+        # GUI-only context (where stderr may be None), fall back to
+        # a simple message box so users still see the error.
+        if sys.stderr is not None:
+            sys.stderr.write(message + "\n")
+        else:  # pragma: no cover - Windows GUI / frozen error path
+            try:
+                import ctypes
+
+                ctypes.windll.user32.MessageBoxW(  # type: ignore[attr-defined]
+                    0,
+                    message,
+                    "nonwordgen GUI error",
+                    0x10,  # MB_ICONERROR
+                )
+            except Exception:
+                # As a last resort, ignore message box failures.
+                pass
         return 1
     return window.run()
 
