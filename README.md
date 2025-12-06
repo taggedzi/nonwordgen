@@ -1,6 +1,6 @@
 # nonwordgen
 
-> **nonwordgen** — because real words are overrated!
+> **nonwordgen** - because real words are overrated!
 
 ---
 
@@ -37,7 +37,7 @@
 
 ---
 
-`nonwordgen` is a multilingual text generator that creates **fake words, sentences, and paragraphs** that *look like* they belong to real languages — but aren’t.  
+`nonwordgen` is a multilingual text generator that creates **fake words, sentences, and paragraphs** that *look like* they belong to real languages - but aren’t.  
 It’s ideal for **lorem ipsum–style filler text**, **UI design**, **test data**, **creative writing**, or anywhere you need realistic-looking nonsense.
 
 Under the hood, it uses a **phonotactic syllable model**, **language plugins**, and **dictionary-based filters** to ensure generated text looks plausible while avoiding real vocabulary.  
@@ -179,8 +179,8 @@ print(nonwordgen.available_languages())
 
 These are **optional** and must be installed separately if desired:
 
-- `wordfreq` — frequency-based dictionary filtering
-- `PyQt6` — enables the GUI
+- `wordfreq` - frequency-based dictionary filtering
+- `PyQt6` - enables the GUI
 
 Install one or more manually:
 
@@ -241,7 +241,7 @@ No PyPI steps required unless you publish there later.
 
 ## 📄 License
 
-MIT License — see `LICENSE`.
+MIT License - see [LICENSE](./LICENSE).
 
 ---
 
@@ -253,7 +253,14 @@ Some documentation and text were drafted with assistance from OpenAI models and 
 
 ## 📚 Third-Party Notices
 
-- **PyQt6** — GUI backend
-- **wordfreq** — Apache-2.0 licensed
+- **PyQt6** - GUI backend
+- **wordfreq** - Apache-2.0 licensed
 
 All optional extras are installed separately and not bundled by default.
+
+---
+
+## 🤝 Code of Conduct
+
+This project follows a simple, respectful [Code of Conduct](./CODE_OF_CONDUCT.md).
+By participating, you agree to uphold these guidelines and help keep the community welcoming and constructive.
