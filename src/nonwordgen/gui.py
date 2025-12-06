@@ -444,7 +444,7 @@ def main() -> int:
             try:
                 import ctypes
 
-                ctypes.windll.user32.MessageBoxW(  # type: ignore[attr-defined]
+                ctypes.windll.user32.MessageBoxW(
                     0,
                     message,
                     "nonwordgen GUI error",
