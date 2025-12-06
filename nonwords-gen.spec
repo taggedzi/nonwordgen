@@ -15,8 +15,10 @@ block_cipher = None
 from PyInstaller.utils.hooks import collect_submodules, collect_data_files
 
 
-hidden_imports = collect_submodules("nonwordgen.languages") + collect_submodules(
-    "PyQt6"
+hidden_imports = (
+    collect_submodules("nonwordgen.languages")
+    + collect_submodules("PyQt6")
+    + collect_submodules("wordfreq")
 )
 
 # Collect data files for wordfreq (if installed) so its frequency tables

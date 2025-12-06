@@ -30,7 +30,7 @@ But using it is easy: pick a language, choose strictness, and generate.
 Since `nonwordgen` is not yet published to PyPI, download it directly from **GitHub Releases**:
 
 ➡ **Download the latest wheel or source package:**  
-https://github.com/taggedzi/nonwordgen/releases
+[nonwordgen Releases](https://github.com/taggedzi/nonwordgen/releases)
 
 Install using pip (point to your downloaded file):
 
@@ -104,8 +104,7 @@ nonwordgen gui
 
 Select your language, chose your options and click generate!
 
-<img width="927" height="563" alt="image" src="https://github.com/user-attachments/assets/8f881573-4a74-48cb-879b-f8ce1883cb3c" />
-
+![Screenshot](docs/images/nonwords-gen_screenshot.png)
 
 ---
 
@@ -133,8 +132,8 @@ print(nonwordgen.available_languages())
 
 These are **optional** and must be installed separately if desired:
 
-* `wordfreq` — frequency-based dictionary filtering
-* `PyQt6` — enables the GUI
+- `wordfreq` — frequency-based dictionary filtering
+- `PyQt6` — enables the GUI
 
 Install one or more manually:
 
@@ -182,8 +181,8 @@ Artifacts from builds appear under `dist/` (wheels/sdists from `build_package`, 
 3. Commit → tag → push
 4. Draft a GitHub Release
 
-   * Upload `.whl` and `.tar.gz` files
-   * Add changelog notes
+   - Upload `.whl` and `.tar.gz` files
+   - Add changelog notes
 
 No PyPI steps required unless you publish there later.
 
@@ -203,7 +202,7 @@ Some documentation and text were drafted with assistance from OpenAI models and 
 
 ## 📚 Third-Party Notices
 
-* **PyQt6** — GUI backend
-* **wordfreq** — Apache-2.0 licensed
+- **PyQt6** — GUI backend
+- **wordfreq** — Apache-2.0 licensed
 
 All optional extras are installed separately and not bundled by default.

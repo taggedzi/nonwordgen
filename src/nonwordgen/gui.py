@@ -7,6 +7,7 @@ import locale
 import sys
 from functools import partial
 from importlib import resources
+from typing import Any
 
 from nonwordgen import __version__
 from nonwordgen.config import Strictness
@@ -444,12 +445,15 @@ def main() -> int:
             try:
                 import ctypes
 
-                ctypes.windll.user32.MessageBoxW(  # type: ignore[attr-defined]
-                    0,
-                    message,
-                    "nonwordgen GUI error",
-                    0x10,  # MB_ICONERROR
-                )
+                ctypes_mod: Any = ctypes
+                user32 = getattr(ctypes_mod, "windll", None)
+                if user32 is not None:
+                    user32.user32.MessageBoxW(
+                        0,
+                        message,
+                        "nonwordgen GUI error",
+                        0x10,  # MB_ICONERROR
+                    )
             except Exception:
                 # As a last resort, ignore message box failures.
                 pass

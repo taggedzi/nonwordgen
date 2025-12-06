@@ -119,6 +119,9 @@ def typecheck(session: nox.Session) -> None:
 @nox.session
 def build(session: nox.Session) -> None:
     _install_project_editable(session)
+    # Ensure optional dictionary backend is available so wordfreq
+    # support (and its data files) are included in GUI builds.
+    session.install(".[dictionaries]")
     # PyInstaller (and PyQt6) are required by build_release.py for the GUI binary.
     session.install("pyinstaller", "PyQt6")
     script = _find_build_script()
@@ -139,6 +142,24 @@ def build_package(session: nox.Session) -> None:
     session.run("python", "-m", "build", external=True)
 
 
+@nox.session
+def build_dist(session: nox.Session) -> None:
+    """Build sdist and wheel artifacts on Linux only."""
+    if sys.platform != "linux":
+        session.log("Skipping build_dist: Linux-only build.")
+        return
+
+    _install_project_editable(session)
+    session.install("build")
+
+    dist_dir = ROOT / "dist"
+    build_dir = ROOT / "build"
+    shutil.rmtree(dist_dir, ignore_errors=True)
+    shutil.rmtree(build_dir, ignore_errors=True)
+
+    session.run("python", "-m", "build", external=True)
+
+
 # Build a standalone Windows executable using PyInstaller.
 @nox.session
 def build_exe(session: nox.Session) -> None:
@@ -148,8 +169,9 @@ def build_exe(session: nox.Session) -> None:
         return
 
     _install_project_editable(session)
-    # Ensure PyInstaller and PyQt6 are available so the GUI
-    # dependencies are correctly frozen into the executable.
+    # Ensure optional dictionary backend is available for GUI builds
+    # and PyInstaller/PyQt6 are present so dependencies freeze correctly.
+    session.install(".[dictionaries]")
     session.install("pyinstaller", "PyQt6")
 
     dist_dir = ROOT / "dist"
