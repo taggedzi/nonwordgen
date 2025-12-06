@@ -264,3 +264,13 @@ All optional extras are installed separately and not bundled by default.
 
 This project follows a simple, respectful [Code of Conduct](./CODE_OF_CONDUCT.md).
 By participating, you agree to uphold these guidelines and help keep the community welcoming and constructive.
+
+---
+
+## 🛡 Security
+
+If you believe you’ve found a security issue, please review the project’s
+[Security Policy](./SECURITY.md).
+
+This project is maintained by a single developer with limited availability. I may not always be able to respond quickly, but I take security
+concerns seriously and appreciate responsible disclosure.
