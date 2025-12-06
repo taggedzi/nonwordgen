@@ -1,67 +1,67 @@
 # .github/labeler.yml
 
-# Core library code
 core:
-  - "src/nonwordgen/**"
-  - "!src/nonwordgen/languages/**"
+  - changed-files:
+      - any-glob-to-any-file: "src/nonwordgen/**"
 
-# Language plugins
-language-plugin:
-  - "src/nonwordgen/languages/**"
+language-module:
+  - changed-files:
+      - any-glob-to-any-file: "src/nonwordgen/languages/**"
 
-# Command-line interface
 cli:
-  - "src/nonwordgen/cli/**"
-  - "src/nonwordgen/__main__.py"
+  - changed-files:
+      - any-glob-to-any-file: "src/cli/**"
+      - any-glob-to-any-file: "src/nonwordgen/__main__.py"
 
-# GUI-related files (if you have a gui module)
 gui:
-  - "src/nonwordgen/gui/**"
+  - changed-files:
+      - any-glob-to-any-file: "src/gui/**"
 
-# Tests
 tests:
-  - "tests/**"
-  - "noxfile.py"
-  - ".github/workflows/test.yml"
+  - changed-files:
+      - any-glob-to-any-file: "tests/**"
+      - any-glob-to-any-file: "noxfile.py"
+      - any-glob-to-any-file: ".github/workflows/test.yml"
 
-# Documentation
 documentation:
-  - "README.md"
-  - "CONTRIBUTING.md"
-  - "SECURITY.md"
-  - "CODE_OF_CONDUCT.md"
-  - "RELEASE.md"
-  - "docs/**"
+  - changed-files:
+      - any-glob-to-any-file: "README.md"
+      - any-glob-to-any-file: "CONTRIBUTING.md"
+      - any-glob-to-any-file: "SECURITY.md"
+      - any-glob-to-any-file: "CODE_OF_CONDUCT.md"
+      - any-glob-to-any-file: "RELEASE.md"
+      - any-glob-to-any-file: "SUPPORT.md"
+      - any-glob-to-any-file: "docs/**"
 
-# CI / workflows
 ci:
-  - ".github/workflows/**"
+  - changed-files:
+      - any-glob-to-any-file: ".github/workflows/**"
 
-# Packaging / build / release config
 packaging:
-  - "pyproject.toml"
-  - "setup.cfg"
-  - "setup.py"
-  - "MANIFEST.in"
-  - ".python-version"
-  - "noxfile.py"
+  - changed-files:
+      - any-glob-to-any-file: "pyproject.toml"
+      - any-glob-to-any-file: "MANIFEST.in"
+      - any-glob-to-any-file: "setup.cfg"
+      - any-glob-to-any-file: "setup.py"
+      - any-glob-to-any-file: ".python-version"
+      - any-glob-to-any-file: "noxfile.py"
 
-# Config & meta / repo hygiene
 config:
-  - ".gitignore"
-  - ".editorconfig"
-  - ".pre-commit-config.yaml"
-  - ".ruff.toml"
-  - "mypy.ini"
-  - ".vscode/**"
-  - ".idea/**"
+  - changed-files:
+      - any-glob-to-any-file: ".gitignore"
+      - any-glob-to-any-file: ".editorconfig"
+      - any-glob-to-any-file: ".pre-commit-config.yaml"
+      - any-glob-to-any-file: ".ruff.toml"
+      - any-glob-to-any-file: "mypy.ini"
+      - any-glob-to-any-file: ".vscode/**"
+      - any-glob-to-any-file: ".idea/**"
 
-# Dependencies
 dependencies:
-  - "pyproject.toml"
-  - "requirements*.txt"
+  - changed-files:
+      - any-glob-to-any-file: "pyproject.toml"
+      - any-glob-to-any-file: "requirements*.txt"
 
-# Changelog / release notes
 changelog:
-  - "CHANGELOG.md"
-  - "RELEASE.md"
+  - changed-files:
+      - any-glob-to-any-file: "CHANGELOG.md"
+      - any-glob-to-any-file: "RELEASE.md"
