@@ -46,8 +46,7 @@ nonwordgen = "nonwordgen.cli:main"
 nonwordgen-gui = "nonwordgen.gui:main"
 
 [tool.setuptools]
-include-package-data = true
+package-dir = {"" = "src"}
 
 [tool.setuptools.packages.find]
-include = ["nonwordgen*"]
-exclude = ["tests*"]
+where = ["src"]
