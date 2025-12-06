@@ -9,9 +9,7 @@
   <img src="https://img.shields.io/badge/License-MIT-ff69b4?style=for-the-badge" />
 
   <!-- Platforms -->
-  <img src="https://img.shields.io/badge/Windows-00aaff?style=for-the-badge&logo=windows11&logoColor=white" />
-  <img src="https://img.shields.io/badge/Linux-ffdd00?style=for-the-badge&logo=linux&logoColor=black" />
-  <img src="https://img.shields.io/badge/macOS-555555?style=for-the-badge&logo=apple&logoColor=white" />
+  <img src="https://img.shields.io/badge/Platforms-Windows%20%7C%20Linux%20%7C%20macOS-00bfff?style=for-the-badge" />
 
   <!-- Project State -->
   <img src="https://img.shields.io/badge/Status-Actively%20Perplexing-00cc66?style=for-the-badge" />
