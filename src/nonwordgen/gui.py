@@ -444,12 +444,14 @@ def main() -> int:
             try:
                 import ctypes
 
-                ctypes.windll.user32.MessageBoxW(
-                    0,
-                    message,
-                    "nonwordgen GUI error",
-                    0x10,  # MB_ICONERROR
-                )
+                user32 = getattr(ctypes, "windll", None)  # type: ignore[attr-defined]
+                if user32 is not None:
+                    user32.user32.MessageBoxW(
+                        0,
+                        message,
+                        "nonwordgen GUI error",
+                        0x10,  # MB_ICONERROR
+                    )
             except Exception:
                 # As a last resort, ignore message box failures.
                 pass
