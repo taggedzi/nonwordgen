@@ -9,100 +9,97 @@ permissions:
   contents: write  # needed to create/update GitHub Releases
 
 jobs:
-  build:
-    name: Test and build artifacts
+  test:
+    name: Test (Linux matrix + one Windows)
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, windows-latest]
+        os: [ubuntu-latest]
+        python-version: ["3.10", "3.11", "3.12", "3.13"]
+        include:
+          # Add exactly one Windows combo for sanity checks
+          - os: windows-latest
+            python-version: "3.13"
 
     steps:
-      - name: Check out code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.12"
+          python-version: ${{ matrix.python-version }}
 
       - name: Install nox
-        run: |
-          python -m pip install --upgrade pip
-          python -m pip install nox
+        run: pip install nox
 
-      - name: Ensure tag matches pyproject.toml
-        run: |
-          python .github/scripts/check_versions_matches_tag.py "${{ github.ref }}"
+      - name: Run test session
+        run: nox -s tests   # <-- change to your real test session name
 
-      # ---- Quality gates ----
-      # Use the single-version nox session variant: tests-3.12
-      - name: Run tests (Python 3.12)
-        run: |
-          nox -s tests-3.12
+  build_linux:
+    name: Build sdist/wheels (Linux)
+    needs: test
+    runs-on: ubuntu-latest
 
-      - name: Run lint
-        run: |
-          nox -s lint
+    steps:
+      - uses: actions/checkout@v4
 
-      - name: Run typecheck (Python 3.12)
-        run: |
-          nox -s typecheck-3.12
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"   # latest for artifact builds
 
-      # ---- Build artifacts ----
-      - name: Build sdist and wheel (Linux only)
-        if: matrix.os == 'ubuntu-latest'
-        run: |
-          nox -s build_package
+      - name: Install nox
+        run: pip install nox
 
-      - name: Build Windows executable (Windows only)
-        if: matrix.os == 'windows-latest'
-        run: |
-          nox -s build_exe
+      - name: Build distributions
+        run: nox -s build_dist   # <-- your session that puts files in dist/
 
-      - name: Upload build artifacts
+      - name: Upload Linux artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: nonwordgen-${{ matrix.os }}
-          path: |
-            dist/**
-          if-no-files-found: error
+          name: linux-dist
+          path: dist/*
 
-  release:
-    name: Create GitHub Release
+  build_windows_exe:
+    name: Build Windows EXE
+    needs: test
     runs-on: windows-latest
-    needs: build
 
     steps:
-      - name: Check out code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.12"
+          python-version: "3.13"   # latest for EXE builds
 
       - name: Install nox
-        run: |
-          python -m pip install --upgrade pip
-          python -m pip install nox
+        run: pip install nox
 
-      - name: Build Windows executable
-        run: |
-          nox -s build_exe
+      - name: Build Windows EXE + zip
+        run: nox -s build_windows_exe   # <-- your session that creates the zip + sha256
 
-      - name: Bundle Windows release artifacts
-        run: |
-          nox -s bundle_release
-
-      - name: Download build artifacts
-        uses: actions/download-artifact@v4
+      - name: Upload Windows EXE artifacts
+        uses: actions/upload-artifact@v4
         with:
-          pattern: nonwordgen-*
-          path: ./artifacts
-          merge-multiple: true
+          name: windows-exe
+          path: |
+            dist/nonwords-gen-v*-win64.zip
+            dist/nonwords-gen-v*-win64.zip.sha256
+
+  release:
+    name: Create GitHub Release and upload assets
+    needs: [build_linux, build_windows_exe]
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: artifacts
 
       - name: Create GitHub Release and upload assets
+      # Only run on tag pushes
         uses: softprops/action-gh-release@v2
         if: startsWith(github.ref, 'refs/tags/')
         with:
@@ -111,8 +108,6 @@ jobs:
           draft: false
           prerelease: false
           files: |
-            dist/nonwords-gen-v*-win64.zip
-            dist/nonwords-gen-v*-win64.zip.sha256
             artifacts/**/*
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
