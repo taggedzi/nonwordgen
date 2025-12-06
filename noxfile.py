@@ -7,12 +7,20 @@ from __future__ import annotations
 from pathlib import Path
 import shutil
 import sys
+import tomllib
+import zipfile
 
 import nox
 from nox.command import CommandFailed
 
 ROOT = Path(__file__).resolve().parent
 PYTHON_VERSIONS = ["3.11", "3.12"]
+
+
+def get_project_version() -> str:
+    """Read and return the project version from pyproject.toml."""
+    data = tomllib.loads((ROOT / "pyproject.toml").read_text(encoding="utf-8"))
+    return data["project"]["version"]
 
 
 def _detect_package_name() -> str:
@@ -191,3 +199,88 @@ def build_exe(session: nox.Session) -> None:
         return
 
     raise RuntimeError("No .spec file or build_release.py found for EXE build.")
+
+
+@nox.session(name="release")
+def release(session: nox.Session) -> None:
+    """
+    Bundle the built Windows executable and related artifacts into a versioned
+    zip file and generate a SHA-256 checksum.
+    """
+    # NOTE: This session does NOT build the binary. Ensure that
+    # dist/nonwords-gen.exe already exists (via another nox session, build
+    # script, or CI step) before running this session; it only bundles
+    # existing artifacts and generates checksums.
+    version = get_project_version()
+    release_name = f"nonwords-gen-v{version}-win64"
+
+    dist_dir = ROOT / "dist"
+    release_dir = dist_dir / release_name
+    binary_path = dist_dir / "nonwords-gen.exe"
+
+    if not binary_path.is_file():
+        session.error(
+            f"Binary not found: {binary_path} (build it before running the release session)"
+        )
+
+    if release_dir.exists():
+        session.log(f"Removing existing release directory: {release_dir}")
+        shutil.rmtree(release_dir)
+
+    session.log(f"Creating release directory: {release_dir}")
+    release_dir.mkdir(parents=True, exist_ok=True)
+
+    # Copy core project files.
+    root = ROOT
+    files_to_copy = [
+        ("LICENSE", release_dir / "LICENSE"),
+        ("README.md", release_dir / "README.md"),
+        ("THIRD_PARTY.md", release_dir / "THIRD_PARTY.md"),
+    ]
+
+    changelog_src = root / "CHANGELOG.md"
+    if changelog_src.is_file():
+        files_to_copy.append(("CHANGELOG.md", release_dir / "CHANGELOG.md"))
+
+    for relative_name, destination in files_to_copy:
+        src = root / relative_name
+        if src.is_file():
+            session.log(f"Copying {src} -> {destination}")
+            shutil.copy2(src, destination)
+
+    # Copy licenses directory.
+    licenses_src = root / "licenses"
+    licenses_dest = release_dir / "licenses"
+    if licenses_src.is_dir():
+        session.log(f"Copying licenses directory: {licenses_src} -> {licenses_dest}")
+        shutil.copytree(licenses_src, licenses_dest)
+
+    # Optionally copy the screenshot if present.
+    screenshot_src = root / "docs" / "images" / "nonwords-gen_screenshot.png"
+    if screenshot_src.is_file():
+        screenshot_dest = release_dir / "docs" / "images" / "nonwords-gen_screenshot.png"
+        session.log(f"Copying screenshot: {screenshot_src} -> {screenshot_dest}")
+        screenshot_dest.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(screenshot_src, screenshot_dest)
+
+    # Copy the built binary.
+    binary_dest = release_dir / "nonwords-gen.exe"
+    session.log(f"Copying binary: {binary_path} -> {binary_dest}")
+    shutil.copy2(binary_path, binary_dest)
+
+    # Create the zip archive containing the release directory.
+    zip_path = dist_dir / f"{release_name}.zip"
+    if zip_path.exists():
+        session.log(f"Removing existing zip archive: {zip_path}")
+        zip_path.unlink()
+
+    session.log(f"Creating zip archive: {zip_path}")
+    with zipfile.ZipFile(zip_path, mode="w", compression=zipfile.ZIP_DEFLATED) as zf:
+        for path in release_dir.rglob("*"):
+            if path.is_file():
+                arcname = path.relative_to(dist_dir)
+                zf.write(path, arcname=str(arcname))
+
+    # Generate SHA-256 checksum for the zip archive.
+    session.log("Generating SHA-256 checksum for the release zip")
+    session.run("python", "tools/generate_sha256.py", str(zip_path), external=True)
