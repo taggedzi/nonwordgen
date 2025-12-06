@@ -1,0 +1,25 @@
+name: 📚 Documentation Update
+description: Report incorrect, missing, or unclear documentation
+labels: ["documentation"]
+body:
+  - type: textarea
+    id: location
+    attributes:
+      label: Where is the issue?
+      placeholder: "README.md > Installation section"
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: What needs to be improved?
+      placeholder: "The instructions mention X, but Y is actually required."
+    validations:
+      required: true
+
+  - type: textarea
+    id: suggestion
+    attributes:
+      label: Suggested Fix
+      placeholder: "Replace the sentence with ..."

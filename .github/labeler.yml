@@ -1,0 +1,67 @@
+# .github/labeler.yml
+
+# Core library code
+core:
+  - "src/nonwordgen/**"
+  - "!src/nonwordgen/languages/**"
+
+# Language plugins
+language-plugin:
+  - "src/nonwordgen/languages/**"
+
+# Command-line interface
+cli:
+  - "src/nonwordgen/cli/**"
+  - "src/nonwordgen/__main__.py"
+
+# GUI-related files (if you have a gui module)
+gui:
+  - "src/nonwordgen/gui/**"
+
+# Tests
+tests:
+  - "tests/**"
+  - "noxfile.py"
+  - ".github/workflows/test.yml"
+
+# Documentation
+documentation:
+  - "README.md"
+  - "CONTRIBUTING.md"
+  - "SECURITY.md"
+  - "CODE_OF_CONDUCT.md"
+  - "RELEASE.md"
+  - "docs/**"
+
+# CI / workflows
+ci:
+  - ".github/workflows/**"
+
+# Packaging / build / release config
+packaging:
+  - "pyproject.toml"
+  - "setup.cfg"
+  - "setup.py"
+  - "MANIFEST.in"
+  - ".python-version"
+  - "noxfile.py"
+
+# Config & meta / repo hygiene
+config:
+  - ".gitignore"
+  - ".editorconfig"
+  - ".pre-commit-config.yaml"
+  - ".ruff.toml"
+  - "mypy.ini"
+  - ".vscode/**"
+  - ".idea/**"
+
+# Dependencies
+dependencies:
+  - "pyproject.toml"
+  - "requirements*.txt"
+
+# Changelog / release notes
+changelog:
+  - "CHANGELOG.md"
+  - "RELEASE.md"

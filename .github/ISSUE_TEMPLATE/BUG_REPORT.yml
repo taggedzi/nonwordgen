@@ -1,0 +1,55 @@
+name: 🐞 Bug Report
+description: Report something that isn't working correctly
+labels: ["bug"]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened?
+      description: |
+        Provide a clear and concise description of the problem.  
+        Include any error messages, screenshots, or unexpected behavior.
+      placeholder: "When I run `...`, the program crashes with ... "
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to Reproduce
+      description: "Please list the exact steps so the issue can be reproduced."
+      placeholder: |
+        1. Run command ...
+        2. Select ...
+        3. Observe ...
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: nonwordgen version
+      description: "Example: v1.2.0"
+    validations:
+      required: true
+
+  - type: input
+    id: os
+    attributes:
+      label: Operating System
+      description: "Example: Windows 11, Ubuntu 24.04"
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs / Tracebacks
+      description: "If applicable, paste the traceback or console output."
+      render: shell
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: Additional Notes
+      description: "Anything else you'd like us to know?"

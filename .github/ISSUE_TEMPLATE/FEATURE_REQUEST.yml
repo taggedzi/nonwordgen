@@ -1,0 +1,40 @@
+name: ✨ Feature Request
+description: Suggest an idea or enhancement for nonwordgen
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: summary
+    attributes:
+      label: What would you like to see added?
+      placeholder: "It would be useful if nonwordgen could ..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: motivation
+    attributes:
+      label: Why is this important?
+      description: "Explain how this feature helps users, improves workflow, or solves a problem."
+      placeholder: "Right now, generating X is difficult because ..."
+    validations:
+      required: false
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed Solution
+      description: "If you have an idea of how this could work, describe it."
+      placeholder: "Maybe add a new option in the CLI like --foo ..."
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives Considered
+      description: "Optional: any different approaches you've thought about?"
+      placeholder: "- Another way might be ..."
+
+  - type: textarea
+    id: extras
+    attributes:
+      label: Additional Context
+      description: "Mockups, screenshots, or references welcome."
