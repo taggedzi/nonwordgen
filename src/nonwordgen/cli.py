@@ -4,9 +4,10 @@ from __future__ import annotations
 
 import argparse
 import random
+import sys
 from typing import Sequence
 
-from .config import Strictness
+from .config import ConfigError, Strictness, validate_config
 from .generator import WordGenerator
 from .languages import available_languages
 from .textgen import (
@@ -205,6 +206,12 @@ def main(argv: Sequence[str] | None = None) -> int:
         except ImportError as exc:  # pragma: no cover - import guard
             parser.error(f"GUI support not available: {exc}")
         return gui_module.main()
+
+    try:
+        validate_config(args)
+    except ConfigError as exc:
+        print(str(exc), file=sys.stderr)
+        return 2
 
     generator = _build_generator(args)
 
