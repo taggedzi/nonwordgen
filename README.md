@@ -211,8 +211,7 @@ nox                  # run default sessions (tests + lint)
 nox -s tests         # run test suite
 nox -s coverage      # run tests with coverage + coverage.xml
 nox -s lint          # run Ruff lint checks
-nox -s lint_fix      # auto-fix with Ruff + Black
-nox -s format        # format code with Black
+nox -s format        # auto-fix with Ruff + Black
 nox -s typecheck     # run mypy
 nox -s build         # build GUI release via build_release.py
 nox -s build_package # build wheel + sdist into dist/

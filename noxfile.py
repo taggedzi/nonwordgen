@@ -101,17 +101,10 @@ def lint(session: nox.Session) -> None:
 
 
 # Run Ruff with auto-fix, then Black formatting.
-@nox.session(name="lint_fix")
-def lint_fix(session: nox.Session) -> None:
-    session.install("ruff", "black")
-    session.run("ruff", "check", "--fix", *CODE_LOCATIONS)
-    session.run("black", *CODE_LOCATIONS)
-
-
-# Format code using Black.
 @nox.session
 def format(session: nox.Session) -> None:
-    session.install("black")
+    session.install("ruff", "black")
+    session.run("ruff", "check", "--fix", *CODE_LOCATIONS)
     session.run("black", *CODE_LOCATIONS)
 
 
