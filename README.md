@@ -1,23 +1,41 @@
 # nonwordgen
 
-> nonword-gen — because real words are overrated!
+> **nonwordgen** — because real words are overrated!
 
-![MIT](https://img.shields.io/badge/License-MIT-ff69b4?style=for-the-badge)
-![Windows](https://img.shields.io/badge/Windows-00aaff?style=for-the-badge&logo=windows11&logoColor=white)
-![Linux](https://img.shields.io/badge/Linux-ffdd00?style=for-the-badge&logo=linux&logoColor=black)
-![macOS](https://img.shields.io/badge/macOS-555555?style=for-the-badge&logo=apple&logoColor=white)
-![Status](https://img.shields.io/badge/Status-Actively%20Perplexing-00cc66?style=for-the-badge)
-![Release](https://img.shields.io/github/v/release/<your-user>/<your-repo>?style=for-the-badge&color=blueviolet)
-![Downloads](https://img.shields.io/github/downloads/<your-user>/<your-repo>/total?style=for-the-badge&color=orange)
-![Python](https://img.shields.io/badge/Built%20with-Python-3776ab?style=for-the-badge&logo=python&logoColor=white)
-![Nox](https://img.shields.io/badge/Automation%20by-NOX-7e57c2?style=for-the-badge)
-![PyInstaller](https://img.shields.io/badge/Frozen%20via-PyInstaller-2e9afe?style=for-the-badge)
-![Tests](https://img.shields.io/github/actions/workflow/status/<your-user>/<your-repo>/ci.yml?style=for-the-badge&label=Tests&color=brightgreen)
-![Release Build](https://img.shields.io/github/actions/workflow/status/<your-user>/<your-repo>/release.yml?style=for-the-badge&label=Release%20Build&color=purple)
-![Ruff](https://img.shields.io/badge/Linting-Ruff%20Wrangled-fc4f30?style=for-the-badge&logo=ruff&logoColor=white)
-![mypy](https://img.shields.io/badge/Typechecks-mypy-1f9aff?style=for-the-badge)
-![Fake](https://img.shields.io/badge/Non-Words-100%25%20Certified%20Fake!-ff5722?style=for-the-badge)
-![Silly](https://img.shields.io/badge/Silliness-Level%20Maximum-f50057?style=for-the-badge)
+---
+
+<p align="center">
+  <!-- Identity & License -->
+  <img src="https://img.shields.io/badge/License-MIT-ff69b4?style=for-the-badge" />
+
+  <!-- Platforms -->
+  <img src="https://img.shields.io/badge/Windows-00aaff?style=for-the-badge&logo=windows11&logoColor=white" />
+  <img src="https://img.shields.io/badge/Linux-ffdd00?style=for-the-badge&logo=linux&logoColor=black" />
+  <img src="https://img.shields.io/badge/macOS-555555?style=for-the-badge&logo=apple&logoColor=white" />
+
+  <!-- Project State -->
+  <img src="https://img.shields.io/badge/Status-Actively%20Perplexing-00cc66?style=for-the-badge" />
+  <img src="https://img.shields.io/github/v/release/taggedzi/nonwordgen?style=for-the-badge&color=blueviolet" />
+  <img src="https://img.shields.io/github/downloads/taggedzi/nonwordgen/total?style=for-the-badge&color=orange" />
+</p>
+
+<p align="center">
+  <!-- Tech Stack -->
+  <img src="https://img.shields.io/badge/Python-3776ab?style=for-the-badge&logo=python&logoColor=white" />
+  <img src="https://img.shields.io/badge/Automation-NOX-7e57c2?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/PyInstaller-2e9afe?style=for-the-badge" />
+
+  <!-- Quality Assurance -->
+  <img src="https://img.shields.io/github/actions/workflow/status/taggedzi/nonwordgen/ci.yml?style=for-the-badge&label=Tests&color=brightgreen" />
+  <img src="https://img.shields.io/github/actions/workflow/status/taggedzi/nonwordgen/release.yml?style=for-the-badge&label=Release%20Build&color=purple" />
+  <img src="https://img.shields.io/badge/Lint-Ruff%20Wrangled-fc4f30?style=for-the-badge&logo=ruff&logoColor=white" />
+  <img src="https://img.shields.io/badge/Typecheck-mypy-1f9aff?style=for-the-badge" />
+
+  <!-- Fun -->
+  <img src="https://img.shields.io/badge/Certified%20Fake-100%25%20Non--Words!-ff5722?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/Silliness-Maximum-f50057?style=for-the-badge" />
+</p>
+
 
 ---
 
