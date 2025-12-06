@@ -26,12 +26,12 @@ except Exception:
 
 
 a = Analysis(
-    ["nonwordgen/gui.py"],
+    ["src/nonwordgen/gui.py"],
     pathex=[],
     binaries=[],
     datas=[
         # Ensure the GUI icon image is available at runtime for importlib.resources
-        ("nonwordgen/assets/nonword-gen.png", "nonwordgen/assets"),
+        ("src/nonwordgen/assets/nonword-gen.png", "nonwordgen/assets"),
         # Bundle license and third-party notice files alongside the binary
         ("LICENSE", "."),
         ("THIRD_PARTY.md", "."),

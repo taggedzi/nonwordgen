@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+# Project uses a src/ layout: package is at src/nonwordgen
+
 from pathlib import Path
 import shutil
 import sys
@@ -14,20 +16,24 @@ PYTHON_VERSIONS = ["3.11", "3.12"]
 
 
 def _detect_package_name() -> str:
-    """Detect the main package directory (contains __init__.py in repo root)."""
+    """Detect the main package directory (contains __init__.py under src/)."""
+    src_root = ROOT / "src"
+    if not src_root.is_dir():
+        raise RuntimeError("Expected a src/ directory for the package layout.")
+
     candidates: list[str] = []
-    for path in ROOT.iterdir():
+    for path in src_root.iterdir():
         if path.is_dir() and (path / "__init__.py").exists():
             candidates.append(path.name)
     if "nonwordgen" in candidates:
         return "nonwordgen"
     if candidates:
         return sorted(candidates)[0]
-    raise RuntimeError("Could not detect a package directory in the repository root.")
+    raise RuntimeError("Could not detect a package directory under src/.")
 
 
 PACKAGE = _detect_package_name()
-CODE_LOCATIONS = (PACKAGE, "tests")
+CODE_LOCATIONS = ("src", "tests")
 
 # When running bare `nox`, run tests and lint by default.
 nox.options.sessions = ("tests", "lint")
@@ -106,7 +112,7 @@ def format(session: nox.Session) -> None:
 def typecheck(session: nox.Session) -> None:
     _install_project_editable(session)
     session.install("mypy")
-    session.run("mypy", PACKAGE, *session.posargs)
+    session.run("mypy", f"src/{PACKAGE}", *session.posargs)
 
 
 # Run the existing build script in the repo root.
