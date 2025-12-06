@@ -7,6 +7,7 @@ import locale
 import sys
 from functools import partial
 from importlib import resources
+from typing import Any
 
 from nonwordgen import __version__
 from nonwordgen.config import Strictness
@@ -444,7 +445,8 @@ def main() -> int:
             try:
                 import ctypes
 
-                user32 = getattr(ctypes, "windll", None)  # type: ignore[attr-defined]
+                ctypes_mod: Any = ctypes
+                user32 = getattr(ctypes_mod, "windll", None)
                 if user32 is not None:
                     user32.user32.MessageBoxW(
                         0,
