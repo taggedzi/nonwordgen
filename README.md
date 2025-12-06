@@ -1,10 +1,41 @@
 # nonwordgen
 
-![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
-![Platform Support](https://img.shields.io/badge/platform-windows%20%7C%20macOS%20%7C%20linux-blue)
-![Status](https://img.shields.io/badge/status-active-success)
-[![GitHub Release](https://img.shields.io/github/v/release/taggedzi/nonwordgen)](https://github.com/taggedzi/nonwordgen/releases)
-![GitHub Downloads](https://img.shields.io/github/downloads/taggedzi/nonwordgen/total.svg)
+> **nonwordgen** — because real words are overrated!
+
+---
+
+<p align="center">
+  <!-- Identity & License -->
+  <img src="https://img.shields.io/badge/License-MIT-ff69b4?style=for-the-badge" />
+
+  <!-- Platforms -->
+  <img src="https://img.shields.io/badge/Platforms-Windows%20%7C%20Linux%20%7C%20macOS-00bfff?style=for-the-badge" />
+
+  <!-- Project State -->
+  <img src="https://img.shields.io/badge/Status-Actively%20Perplexing-00cc66?style=for-the-badge" />
+  <img src="https://img.shields.io/github/v/release/taggedzi/nonwordgen?style=for-the-badge&color=blueviolet" />
+  <img src="https://img.shields.io/github/downloads/taggedzi/nonwordgen/total?style=for-the-badge&color=orange" />
+</p>
+
+<p align="center">
+  <!-- Tech Stack -->
+  <img src="https://img.shields.io/badge/Python-3776ab?style=for-the-badge&logo=python&logoColor=white" />
+  <img src="https://img.shields.io/badge/Automation-NOX-7e57c2?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/PyInstaller-2e9afe?style=for-the-badge" />
+
+  <!-- Quality Assurance -->
+  <img src="https://img.shields.io/github/actions/workflow/status/taggedzi/nonwordgen/ci.yml?style=for-the-badge&label=Tests&color=brightgreen" />
+  <img src="https://img.shields.io/github/actions/workflow/status/taggedzi/nonwordgen/release.yml?style=for-the-badge&label=Release%20Build&color=purple" />
+  <img src="https://img.shields.io/badge/Lint-Ruff%20Wrangled-fc4f30?style=for-the-badge&logo=ruff&logoColor=white" />
+  <img src="https://img.shields.io/badge/Typecheck-mypy-1f9aff?style=for-the-badge" />
+
+  <!-- Fun -->
+  <img src="https://img.shields.io/badge/Certified%20Fake-100%25%20Non--Words!-ff5722?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/Silliness-Maximum-f50057?style=for-the-badge" />
+</p>
+
+
+---
 
 `nonwordgen` is a multilingual text generator that creates **fake words, sentences, and paragraphs** that *look like* they belong to real languages — but aren’t.  
 It’s ideal for **lorem ipsum–style filler text**, **UI design**, **test data**, **creative writing**, or anywhere you need realistic-looking nonsense.
