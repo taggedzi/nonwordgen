@@ -1,7 +1,7 @@
-# 🧩 Contributing to **nonword-gen**
+# 🧩 Contributing to **nonwordgen**
 
-Thank you for considering contributing to **nonword-gen**!
-This project thrives on modularity, clarity, and a little bit of silliness — so contributions are welcome whether you're fixing a bug, improving docs, or adding a brand-new language plugin.
+Thank you for considering contributing to **nonwordgen**!
+This project thrives on modularity, clarity, and a little bit of silliness - so contributions are welcome whether you're fixing a bug, improving docs, or adding a brand-new language plugin.
 
 ---
 
@@ -9,7 +9,7 @@ This project thrives on modularity, clarity, and a little bit of silliness — s
 
 **Requirements:**
 
-* Python **3.11** (project is tested against 3.9–3.13, but dev uses 3.11)
+* Python **3.11** (project is tested against 3.10–3.13, but dev uses 3.11)
 * `pip` or `pipx`
 * `nox` for automation (recommended but optional)
 * Git
@@ -18,8 +18,8 @@ This project thrives on modularity, clarity, and a little bit of silliness — s
 
 ```bash
 # 1. Clone the repo
-git clone https://github.com/<yourname>/nonword-gen.git
-cd nonword-gen
+git clone https://github.com/taggedzi/nonwordgen.git
+cd nonwordgen
 
 # 2. Create a virtual environment
 python -m venv .venv
@@ -67,7 +67,7 @@ nox -s coverage
 
 ## 🎨 3. Coding Style
 
-nonword-gen follows a consistent and strict-but-friendly coding style.
+nonwordgen follows a consistent and strict-but-friendly coding style.
 
 We use:
 
@@ -79,7 +79,7 @@ We use:
 | **pytest**  | Testing                              |
 | **tox/nox** | Automation (depending on your setup) |
 
-### Before submitting a PR:
+### Before submitting a PR
 
 ```bash
 nox -s format      # runs ruff --fix + black
@@ -104,7 +104,7 @@ All new code **must include type hints** and should include tests unless trivial
 
 ## 🌍 4. Adding a New Language Plugin (MOST IMPORTANT!)
 
-Language support in **nonword-gen** is fully pluggable.
+Language support in **nonwordgen** is fully pluggable.
 Each plugin defines:
 
 * Its own **language code** (e.g., `en`, `es`, `jp`)
@@ -114,7 +114,7 @@ Each plugin defines:
 
 Plugins live inside:
 
-```
+```bash
 src/nonwordgen/plugins/
 ```
 
@@ -122,7 +122,7 @@ src/nonwordgen/plugins/
 
 Example for a Spanish plugin:
 
-```
+```bash
 src/nonwordgen/plugins/es.py
 ```
 
@@ -160,7 +160,7 @@ class SpanishPlugin(LanguagePlugin):
 
 Add your plugin to:
 
-```
+```bash
 src/nonwordgen/plugins/__init__.py
 ```
 
@@ -175,7 +175,7 @@ available_plugins["es"] = SpanishPlugin()
 
 Create a file:
 
-```
+```bash
 tests/plugins/test_es.py
 ```
 
@@ -213,3 +213,189 @@ Add your language to:
 
 Open a GitHub Issue or start a Discussion if you're unsure about anything.
 Whether you're fixing a typo or adding a full new orthographic system, your contribution is welcome!
+
+Absolutely — here’s a clean, professional, concise section you can drop directly into **CONTRIBUTING.md** under a heading such as *“Labeling Conventions”* or *“Pull Request Labels”*.
+I kept it consistent with your project’s tone: friendly, structured, and helpful.
+
+---
+
+# 📛 Pull Request & Issue Labels
+
+To keep the repository organized and make reviews easier, GitHub automatically applies labels based on which files are changed.
+Below is a quick guide to what each label means and when it appears.
+
+### **`core`**
+
+Changes to the primary nonwordgen logic located under:
+
+```bash
+src/nonwordgen/
+```
+
+(excluding language modules).
+This includes syllable generation, filtering logic, paragraph/sentence generators, and internal helpers.
+
+---
+
+### **`language-module`**
+
+Updates to any language implementation under:
+
+```bash
+src/nonwordgen/languages/
+```
+
+Examples:
+
+* Adding a new language
+* Modifying phonotactic rules
+* Updating syllable sets or orthography
+
+---
+
+### **`cli`**
+
+Changes affecting the command-line interface:
+
+```bash
+src/cli/
+src/nonwordgen/__main__.py
+```
+
+Examples:
+
+* Flags
+* Options
+* User-facing CLI behavior
+
+---
+
+### **`gui`**
+
+Changes affecting the graphical application:
+
+```bash
+src/gui/
+```
+
+Examples:
+
+* UI layout
+* Widgets
+* Event handling
+* Visual styles
+
+---
+
+### **`tests`**
+
+Any changes to tests or test infrastructure:
+
+```bash
+tests/
+noxfile.py
+.github/workflows/test.yml
+```
+
+---
+
+### **`documentation`**
+
+Changes to markdown files, docs, or top-level project descriptions:
+
+```bash
+README.md
+CONTRIBUTING.md
+SECURITY.md
+CODE_OF_CONDUCT.md
+SUPPORT.md
+RELEASE.md
+docs/
+```
+
+This label applies whether you fix typos, rewrite paragraphs, or add new sections.
+
+---
+
+### **`ci`**
+
+Changes to GitHub Actions workflows:
+
+```bash
+.github/workflows/
+```
+
+Examples:
+
+* Test matrix updates
+* Build pipelines
+* Release automation
+
+---
+
+### **`packaging`**
+
+Changes affecting how the project is built or distributed:
+
+```bash
+pyproject.toml
+setup.cfg / setup.py
+MANIFEST.in
+noxfile.py
+```
+
+Examples:
+
+* Dependency metadata
+* Entry points
+* Wheel configuration
+
+---
+
+### **`config`**
+
+Changes to development or repository hygiene files:
+
+```bash
+.pre-commit-config.yaml
+.editorconfig
+.gitignore
+mypy.ini
+ruff config
+.vscode/
+.idea/
+```
+
+Includes formatting, editor settings, and static analysis rules.
+
+---
+
+### **`dependencies`**
+
+Updates to project or dev dependencies:
+
+```bash
+pyproject.toml
+requirements*.txt
+```
+
+---
+
+### **`changelog`**
+
+Changes specifically to release notes or project history:
+
+```bash
+CHANGELOG.md
+RELEASE.md
+```
+
+---
+
+# 💡 Why These Labels Matter
+
+* Makes PR review faster
+* Helps automatic changelog generation
+* Helps contributors understand which part of the project they're changing
+* Keeps the repo clean and organized over time
+* Allows filtering PRs/issues easily
