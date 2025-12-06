@@ -207,16 +207,18 @@ python -m pip install nox
 Common tasks via nox:
 
 ```bash
-nox                  # run default sessions (tests + lint)
-nox -s tests         # run test suite
-nox -s coverage      # run tests with coverage + coverage.xml
-nox -s lint          # run Ruff lint checks
-nox -s format        # auto-fix with Ruff + Black
-nox -s typecheck     # run mypy
-nox -s build         # build GUI release via build_release.py
-nox -s build_package # build wheel + sdist into dist/
-nox -s build_dist    # Linux-only sdist + wheel build (CI-friendly)
-nox -s build_exe     # build standalone Windows EXE (no-op on non-Windows)
+nox                              # run default sessions (tests + lint)
+nox -s tests                     # run test suite
+nox -s coverage                  # run tests with coverage + coverage.xml
+nox -s lint                      # run Ruff lint checks
+nox -s format                    # auto-fix with Ruff + Black
+nox -s typecheck                 # run mypy
+nox -s build                     # build GUI release via build_release.py
+nox -s build_package             # build wheel + sdist into dist/
+nox -s build_dist                # Linux-only sdist + wheel build (CI-friendly)
+nox -s build_exe                 # build standalone Windows EXE (no-op on non-Windows)
+nox -s bundle_release            # bundles artifacts/files into a versioned Zip for release
+nox -s publish_release -- 1.2.1  # publishes a release, update changelog, commit, create tags, push to github for release generation
 ```
 
 You can still run `pytest` or `python -m build` directly if you prefer, but the GitHub Actions CI uses the nox sessions above so you can reproduce CI locally with the same commands.
@@ -274,3 +276,11 @@ If you believe you’ve found a security issue, please review the project’s
 
 This project is maintained by a single developer with limited availability. I may not always be able to respond quickly, but I take security
 concerns seriously and appreciate responsible disclosure.
+
+---
+
+## 📜 Changelog
+
+For a history of changes, see the [Changelog](./CHANGELOG.md).
+
+The changelog is generated automatically from git tags and commit messages.
