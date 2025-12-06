@@ -9,7 +9,9 @@
   <img src="https://img.shields.io/badge/License-MIT-ff69b4?style=for-the-badge" />
 
   <!-- Platforms -->
-  <img src="https://img.shields.io/badge/Platforms-Windows%20%7C%20Linux%20%7C%20macOS-00bfff?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/OS-Windows-0078D6?logo=windows&style=for-the-badge&logoColor=white" />
+  <img src="https://img.shields.io/badge/OS-Linux-FCC624?logo=linux&style=for-the-badge&logoColor=black" />
+  <img src="https://img.shields.io/badge/macOS-Untested-lightgrey?logo=apple&style=for-the-badge" />
 
   <!-- Project State -->
   <img src="https://img.shields.io/badge/Status-Actively%20Perplexing-00cc66?style=for-the-badge" />
@@ -48,11 +50,15 @@ But using it is easy: pick a language, choose strictness, and generate.
 ## ✨ Features
 
 - ✔️ Generate **nonwords**, **sentences**, and full **paragraphs**  
-- ✔️ Currently Supports **29 languages**, including accents & proper orthography  
-- ✔️ **Plugin-based** language architecture  
-- ✔️ Optional dictionary filtering to avoid real words  
+- ✔️ Supports **29 languages** with accurate orthography  
+- ✔️ **Plugin-based** architecture for easy language expansion  
+- ✔️ Optional dictionary filtering  
 - ✔️ **GUI**, **CLI**, and **Python API**  
-- ✔️ Cross-platform: Windows / macOS / Linux  
+- ✔️ Works on Windows and Linux
+
+**macOS users:**  
+The project will probably run on macOS, but I don’t have access to a Mac to test or build for it.  
+If you're a macOS user and try it out, feedback is appreciated!
 
 ---
 
