@@ -1,0 +1,67 @@
+# .github/labeler.yml
+
+core:
+  - changed-files:
+      - any-glob-to-any-file: "src/nonwordgen/**"
+
+language-module:
+  - changed-files:
+      - any-glob-to-any-file: "src/nonwordgen/languages/**"
+
+cli:
+  - changed-files:
+      - any-glob-to-any-file: "src/cli/**"
+      - any-glob-to-any-file: "src/nonwordgen/__main__.py"
+
+gui:
+  - changed-files:
+      - any-glob-to-any-file: "src/gui/**"
+
+tests:
+  - changed-files:
+      - any-glob-to-any-file: "tests/**"
+      - any-glob-to-any-file: "noxfile.py"
+      - any-glob-to-any-file: ".github/workflows/test.yml"
+
+documentation:
+  - changed-files:
+      - any-glob-to-any-file: "README.md"
+      - any-glob-to-any-file: "CONTRIBUTING.md"
+      - any-glob-to-any-file: "SECURITY.md"
+      - any-glob-to-any-file: "CODE_OF_CONDUCT.md"
+      - any-glob-to-any-file: "RELEASE.md"
+      - any-glob-to-any-file: "SUPPORT.md"
+      - any-glob-to-any-file: "docs/**"
+
+ci:
+  - changed-files:
+      - any-glob-to-any-file: ".github/workflows/**"
+
+packaging:
+  - changed-files:
+      - any-glob-to-any-file: "pyproject.toml"
+      - any-glob-to-any-file: "MANIFEST.in"
+      - any-glob-to-any-file: "setup.cfg"
+      - any-glob-to-any-file: "setup.py"
+      - any-glob-to-any-file: ".python-version"
+      - any-glob-to-any-file: "noxfile.py"
+
+config:
+  - changed-files:
+      - any-glob-to-any-file: ".gitignore"
+      - any-glob-to-any-file: ".editorconfig"
+      - any-glob-to-any-file: ".pre-commit-config.yaml"
+      - any-glob-to-any-file: ".ruff.toml"
+      - any-glob-to-any-file: "mypy.ini"
+      - any-glob-to-any-file: ".vscode/**"
+      - any-glob-to-any-file: ".idea/**"
+
+dependencies:
+  - changed-files:
+      - any-glob-to-any-file: "pyproject.toml"
+      - any-glob-to-any-file: "requirements*.txt"
+
+changelog:
+  - changed-files:
+      - any-glob-to-any-file: "CHANGELOG.md"
+      - any-glob-to-any-file: "RELEASE.md"
