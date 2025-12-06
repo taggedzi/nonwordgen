@@ -33,7 +33,7 @@ jobs:
 
       - name: Ensure tag matches pyproject.toml
         run: |
-          python .github/scripts/check_version_matches_tag.py "${{ github.ref }}"
+          python .github/scripts/check_versions_matches_tag.py "${{ github.ref }}"
 
       # ---- Quality gates ----
       # Use the single-version nox session variant: tests-3.12
