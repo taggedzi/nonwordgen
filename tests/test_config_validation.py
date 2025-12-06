@@ -3,7 +3,6 @@ from __future__ import annotations
 from types import SimpleNamespace
 
 import pytest
-
 from nonwordgen.config import ConfigError, validate_config
 
 
@@ -86,4 +85,3 @@ def test_validate_config_rejects_invalid_sentence_count_range() -> None:
 
     message = str(excinfo.value)
     assert "Sentences per paragraph" in message
-

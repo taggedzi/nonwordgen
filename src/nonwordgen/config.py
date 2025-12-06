@@ -79,9 +79,7 @@ def validate_config(cfg: Any) -> None:
     _maybe_validate("Word length", "min_length", "max_length", errors)
     _maybe_validate("Syllables per word", "min_syllables", "max_syllables", errors)
     _maybe_validate("Words per sentence", "min_words", "max_words", errors)
-    _maybe_validate(
-        "Sentences per paragraph", "min_sentences", "max_sentences", errors
-    )
+    _maybe_validate("Sentences per paragraph", "min_sentences", "max_sentences", errors)
 
     if errors:
         bullet_list = "\n".join(f"- {msg}" for msg in errors)
