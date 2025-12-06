@@ -7,10 +7,11 @@ import locale
 import sys
 from functools import partial
 from importlib import resources
+from types import SimpleNamespace
 from typing import Any
 
 from nonwordgen import __version__
-from nonwordgen.config import Strictness
+from nonwordgen.config import ConfigError, Strictness, validate_config
 from nonwordgen.generator import WordGenerator
 from nonwordgen.languages import available_languages
 from nonwordgen.textgen import generate_paragraphs, generate_sentences
@@ -399,11 +400,39 @@ class MainWindow:  # pragma: no cover - GUI heavy
         )
 
     def _generate_words(self) -> None:
+        QMessageBox = self.qt["QMessageBox"]
+        cfg = SimpleNamespace(
+            min_length=self.min_length.value(),
+            max_length=self.max_length.value(),
+            min_syllables=self.min_syllables.value(),
+            max_syllables=self.max_syllables.value(),
+        )
+        try:
+            validate_config(cfg)
+        except ConfigError as exc:
+            QMessageBox.warning(self.window, "Invalid settings", str(exc))
+            return
+
         generator = self._build_generator()
         words = generator.generate_many(self.word_count.value())
         self.words_output.setPlainText("\n".join(words))
 
     def _generate_sentences(self) -> None:
+        QMessageBox = self.qt["QMessageBox"]
+        cfg = SimpleNamespace(
+            min_length=self.min_length.value(),
+            max_length=self.max_length.value(),
+            min_syllables=self.min_syllables.value(),
+            max_syllables=self.max_syllables.value(),
+            min_words=self.min_words.value(),
+            max_words=self.max_words.value(),
+        )
+        try:
+            validate_config(cfg)
+        except ConfigError as exc:
+            QMessageBox.warning(self.window, "Invalid settings", str(exc))
+            return
+
         generator = self._build_generator()
         sentences = generate_sentences(
             generator,
@@ -414,6 +443,23 @@ class MainWindow:  # pragma: no cover - GUI heavy
         self.sentences_output.setPlainText("\n".join(sentences))
 
     def _generate_paragraphs(self) -> None:
+        QMessageBox = self.qt["QMessageBox"]
+        cfg = SimpleNamespace(
+            min_length=self.min_length.value(),
+            max_length=self.max_length.value(),
+            min_syllables=self.min_syllables.value(),
+            max_syllables=self.max_syllables.value(),
+            min_sentences=self.min_sentences.value(),
+            max_sentences=self.max_sentences.value(),
+            min_words=self.min_words_para.value(),
+            max_words=self.max_words_para.value(),
+        )
+        try:
+            validate_config(cfg)
+        except ConfigError as exc:
+            QMessageBox.warning(self.window, "Invalid settings", str(exc))
+            return
+
         generator = self._build_generator()
         paragraphs = generate_paragraphs(
             generator,
