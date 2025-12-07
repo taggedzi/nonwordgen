@@ -7,7 +7,7 @@ Add SPDX-License-Identifier headers to source/text files in the repository.
 
 - Inserts a hash-style SPDX header (e.g. "# SPDX-License-Identifier: MIT")
 - Respects shebang and coding cookie ordering for Python files
-- Skips common build/virtualenv/cache directories
+- Skips common build/virtualenv/cache directories and .egg-info metadata
 """
 
 from __future__ import annotations
@@ -22,7 +22,7 @@ from typing import Iterable
 LICENSE_ID = "MIT"
 SPDX_TEXT = f"SPDX-License-Identifier: {LICENSE_ID}"
 
-# Directories we will NOT descend into
+# Directories we will NOT descend into (exact matches)
 SKIP_DIRS = {
     ".git",
     ".hg",
@@ -124,11 +124,14 @@ def should_process_file(path: pathlib.Path) -> bool:
 
 
 def iter_files(root: pathlib.Path) -> Iterable[pathlib.Path]:
-    """Yield all candidate files under root, skipping SKIP_DIRS."""
+    """Yield all candidate files under root, skipping SKIP_DIRS and *.egg-info."""
     for dirpath, dirnames, filenames in os_walk(root):
-        # dirpath is a Path, dirnames and filenames lists of names (no paths)
-        # Filter dirnames in-place to prevent descending
-        dirnames[:] = [d for d in dirnames if d not in SKIP_DIRS]
+        # Filter dirnames in-place to prevent descending into skipped dirs
+        dirnames[:] = [
+            d
+            for d in dirnames
+            if d not in SKIP_DIRS and not d.endswith(".egg-info")
+        ]
         for name in filenames:
             yield dirpath / name
 
