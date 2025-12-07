@@ -16,11 +16,11 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest]
-        python-version: ["3.10", "3.11", "3.12", "3.13"]
+        python-version: ["3.10", "3.11", "3.12"]
         include:
           # Add exactly one Windows combo for sanity checks
           - os: windows-latest
-            python-version: "3.13"
+            python-version: "3.12"
 
     steps:
       - uses: actions/checkout@v4
@@ -31,10 +31,12 @@ jobs:
           python-version: ${{ matrix.python-version }}
 
       - name: Install nox
-        run: pip install nox
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install nox
 
       - name: Run test session
-        run: nox -s tests   # <-- change to your real test session name
+        run: nox -s tests -p ${{ matrix.python-version }}
 
   build_linux:
     name: Build sdist/wheels (Linux)
@@ -81,7 +83,7 @@ jobs:
         run: pip install nox
 
       - name: Build Windows EXE + zip
-        run: nox -s build_windows_exe   # <-- your session that creates the zip + sha256
+        run: nox -s build_exe   # session that creates the EXE and related artifacts
 
       - name: Upload Windows EXE artifacts
         uses: actions/upload-artifact@v4
