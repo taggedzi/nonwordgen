@@ -1,4 +1,3 @@
-# SPDX-License-Identifier: MIT
 # Changelog
 
 All notable changes to this project will be documented in this file.
@@ -7,10 +6,33 @@ This changelog is **automatically generated** from git tags and commit messages 
 
 ## [Unreleased]
 
-- Bump to version 1.2.1 (7ecbdca)
-- Better docs (#16) (b12bbb7)
+- Bump to version v1.2.2 (ca12694)
+- - Fix type hints and behavior of WordfreqDictionary (#25) (6e7b81c)
+- - Fix type hints and behavior of WordfreqDictionary - Make WordfreqDictionary subclass DictionaryBackend so it can be used in composite backends without mypy errors. - Extend WordfreqDictionary.__init__ to accept real_word_min_zipf (used by language plugins) and expose an available flag. - Handle missing wordfreq gracefully by disabling the backend instead of failing. - Update initialization and is_real_word to fall back when zipf_frequency stubs donâ€™t accept a wordlist keyword, ensuring dictionary tests pass. (5496ea9)
+- Spdx support (#23) (9937d7e)
+- Added changes to account for egg-info (bfd87be)
+- Added testing check for spdx in pr template. (458ce84)
+- **feat(ci,spdx): integrate SPDX validation into tooling, CI, and release process** (30e77b0)
+- SPDX support for all files. (f8b4298)
+- Added PR and Issue Labels, fixed repo url, added code bracket types. (#22) (4b94d72)
+- Added PR and Issue Labels, fixed repo url, added code bracket types. (51f3226)
+- **feat: add community standards and automated PR labeling** (#21) (0564a7a)
+- Modified labeler.yml layout to support newer standard. (cda069f)
+- **feat: add community standards and automated PR labeling** (16be50b)
+- Updated Platforms (#20) (3a3be77)
+- Updated Platforms - Notes for MacOS, not support, should work, but... I has no mac to test or build with. - Updated badges too reflect that. (395178d)
+- chore(ci, metadata): update release workflow and expand project metadata (#19) (6a34225)
+- chore(ci, metadata): update release workflow and expand project metadata (7f43839)
+- Modified permissions of ci.yml to follow the rule of "least privilege" (#18) (1f00139)
+- Modified permissions of ci.yml to follow the rule of "least privilege" (1fa70ab)
 
 ---
+
+## [v1.2.1]
+
+- Update changelog for v1.2.1 (399ee5e)
+- Bump to version 1.2.1 (7ecbdca)
+- Better docs (#16) (b12bbb7)
 
 ## [v1.2.0]
 
