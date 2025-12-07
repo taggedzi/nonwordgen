@@ -1,4 +1,3 @@
-# SPDX-License-Identifier: MIT
 # Changelog
 
 All notable changes to this project will be documented in this file.
@@ -7,6 +6,13 @@ This changelog is **automatically generated** from git tags and commit messages 
 
 ## [Unreleased]
 
+- bump and spdx fix (ec61a59)
+
+---
+
+## [v1.2.2]
+
+- Update changelog for v1.2.2 (ffdca31)
 - Bump to version v1.2.2 (ca12694)
 - - Fix type hints and behavior of WordfreqDictionary (#25) (6e7b81c)
 - - Fix type hints and behavior of WordfreqDictionary - Make WordfreqDictionary subclass DictionaryBackend so it can be used in composite backends without mypy errors. - Extend WordfreqDictionary.__init__ to accept real_word_min_zipf (used by language plugins) and expose an available flag. - Handle missing wordfreq gracefully by disabling the backend instead of failing. - Update initialization and is_real_word to fall back when zipf_frequency stubs donâ€™t accept a wordlist keyword, ensuring dictionary tests pass. (5496ea9)
@@ -26,8 +32,6 @@ This changelog is **automatically generated** from git tags and commit messages 
 - chore(ci, metadata): update release workflow and expand project metadata (7f43839)
 - Modified permissions of ci.yml to follow the rule of "least privilege" (#18) (1f00139)
 - Modified permissions of ci.yml to follow the rule of "least privilege" (1fa70ab)
-
----
 
 ## [v1.2.1]
 
