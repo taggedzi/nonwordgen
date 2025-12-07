@@ -6,12 +6,17 @@ This changelog is **automatically generated** from git tags and commit messages 
 
 ## [Unreleased]
 
+- Added Build release zip step in release workflow. Bump Version to 1.2.4 (85cb39d)
+
+---
+
+## [v1.2.3]
+
+- Update changelog for v1.2.3 (12684ff)
 - Bump to version 1.2.3 (ff5ea11)
 - Fixed major issue with deployment. Accidentally created dual matrix systems on top of each other. (c1f5db3)
 - Testing version changes for python. (a46406b)
 - Updated workflows to include 3.10, 3.11, and 3.12 for linux. and only 3.12 for windows. (fc1f9af)
-
----
 
 ## [v1.2.2]
 
