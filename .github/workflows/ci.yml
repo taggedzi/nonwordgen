@@ -17,8 +17,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        # Project requires Python >=3.10; test against 3.10, 3.11, and 3.12.
-        python-version: ["3.10", "3.11", "3.12"]
+        python-version: ["3.10", "3.11", "3.12", "3.13"]
 
     steps:
       # Check out the repository.
@@ -43,7 +42,7 @@ jobs:
 
       # Run test suite via nox.
       - name: Run tests session
-        run: nox -s tests -p ${{ matrix.python-version }}
+        run: nox -s tests
 
       # Run linting (Ruff) via nox.
       - name: Run lint session

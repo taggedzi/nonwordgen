@@ -16,11 +16,11 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest]
-        python-version: ["3.10", "3.11", "3.12"]
+        python-version: ["3.10", "3.11", "3.12", "3.13"]
         include:
           # Add exactly one Windows combo for sanity checks
           - os: windows-latest
-            python-version: "3.12"
+            python-version: "3.13"
 
     steps:
       - uses: actions/checkout@v4
@@ -36,7 +36,7 @@ jobs:
           python -m pip install nox
 
       - name: Run test session
-        run: nox -s tests -p ${{ matrix.python-version }}
+        run: nox -s tests
 
   build_linux:
     name: Build sdist/wheels (Linux)
