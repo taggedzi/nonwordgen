@@ -6,6 +6,16 @@ This changelog is **automatically generated** from git tags and commit messages 
 
 ## [Unreleased]
 
+- Bump to version 1.2.3 (ff5ea11)
+- Fixed major issue with deployment. Accidentally created dual matrix systems on top of each other. (c1f5db3)
+- Testing version changes for python. (a46406b)
+- Updated workflows to include 3.10, 3.11, and 3.12 for linux. and only 3.12 for windows. (fc1f9af)
+
+---
+
+## [v1.2.2]
+
+- Update changelog for v1.2.2 (012ceb3)
 - Bump to v1.2.2 (0979637)
 - Fixed Error: Accidentally scripted SPDX addition to md files - Added script to remove spdx from md files - Modified script that adds spdx files to exclude makrdown - Modified script that scans for spdx headers to not check markdown. - Ran scripts to cleanup markdown files. (a69dd05)
 - Added tomli package to support python 3.10 as fallback. (bdb469b)
@@ -31,8 +41,6 @@ This changelog is **automatically generated** from git tags and commit messages 
 - chore(ci, metadata): update release workflow and expand project metadata (7f43839)
 - Modified permissions of ci.yml to follow the rule of "least privilege" (#18) (1f00139)
 - Modified permissions of ci.yml to follow the rule of "least privilege" (1fa70ab)
-
----
 
 ## [v1.2.1]
 
