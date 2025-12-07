@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 # Security Policy
 
 Thank you for taking the time to help keep this project secure.

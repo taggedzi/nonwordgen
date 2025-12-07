@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 """Public API for the nonwordgen package."""
 
 from __future__ import annotations

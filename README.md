@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 # nonwordgen
 
 > **nonwordgen** - because real words are overrated!
@@ -219,6 +220,8 @@ nox -s coverage                  # run tests with coverage + coverage.xml
 nox -s lint                      # run Ruff lint checks
 nox -s format                    # auto-fix with Ruff + Black
 nox -s typecheck                 # run mypy
+nox -s spdx                      # run test to confirm spdx license text included
+nox -s spdx -- add               # Add the spdx license text to any file that does not have it.
 nox -s build                     # build GUI release via build_release.py
 nox -s build_package             # build wheel + sdist into dist/
 nox -s build_dist                # Linux-only sdist + wheel build (CI-friendly)

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 """Swahili language plugin implementation."""
 
 from __future__ import annotations

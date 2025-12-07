@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 """Hungarian language plugin implementation."""
 
 from __future__ import annotations

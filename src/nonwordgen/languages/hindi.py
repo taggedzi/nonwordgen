@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 """Hindi language plugin implementation."""
 
 from __future__ import annotations

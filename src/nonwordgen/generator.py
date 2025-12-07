@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 """High-level word generator API."""
 
 from __future__ import annotations

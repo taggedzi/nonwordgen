@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 """Malay language plugin implementation."""
 
 from __future__ import annotations

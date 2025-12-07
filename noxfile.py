@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 """Nox sessions for testing, linting, type checking, and building."""
 
 from __future__ import annotations
@@ -301,3 +302,42 @@ def bundle_release(session: nox.Session) -> None:
     # Generate SHA-256 checksum for the zip archive.
     session.log("Generating SHA-256 checksum for the release zip")
     session.run("python", "tools/generate_sha256.py", str(zip_path), external=True)
+
+
+@nox.session
+def spdx(session):
+    """
+    Check (default) or add SPDX headers to the repository.
+    Validates that all source files include an SPDX license header.
+    This session is enforced in CI and required for releases.
+
+    Usage:
+        nox -s spdx            # check only, fails if headers are missing
+        nox -s spdx -- add     # auto-add missing SPDX headers
+    """
+    script = "tools/add_spdx_headers.py"
+
+    # Add mode: actually modify files.
+    if session.posargs and session.posargs[0] == "add":
+        session.log("Adding SPDX headers where missing...")
+        session.run("python", script, external=True)
+        return
+
+    # Default: check mode (dry-run, fail if anything *would* change).
+    session.log("Checking SPDX headers (dry run)...")
+    output = session.run(
+        "python",
+        script,
+        "--dry-run",
+        external=True,
+        silent=True,
+        success_codes=[0],
+    )
+
+    if "WOULD add SPDX header" in output:
+        session.error(
+            "Some files are missing SPDX headers.\n"
+            "Run `nox -s spdx -- add` to fix them."
+        )
+    else:
+        session.log("All files already contain SPDX headers.")

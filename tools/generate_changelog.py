@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# SPDX-License-Identifier: MIT
 """
 Generate a CHANGELOG.md file from git tags and commit messages.
 

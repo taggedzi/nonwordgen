@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 """Allow running `python -m nonwordgen` to invoke the CLI."""
 
 from __future__ import annotations

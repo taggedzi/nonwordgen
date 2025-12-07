@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 """PyQt-based graphical interface for nonwordgen."""
 
 from __future__ import annotations

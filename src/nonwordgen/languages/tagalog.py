@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 """Tagalog/Filipino language plugin implementation."""
 
 from __future__ import annotations

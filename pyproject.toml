@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 [build-system]
 requires = ["setuptools>=68.0", "wheel", "build"]
 build-backend = "setuptools.build_meta"

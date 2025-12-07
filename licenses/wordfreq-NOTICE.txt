@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 wordfreq  
 Copyright 2022 Robyn Speer
 
