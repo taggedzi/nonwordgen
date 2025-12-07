@@ -5,13 +5,15 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "nonwordgen"
-version = "1.2.3"
+version = "1.2.4"
 description = "Generate realistic like non-words in multiple languages."
 readme = "README.md"
 authors = [{name = "Matthew Craig", email = "taggedzi.mpc@gmail.com"}]
 requires-python = ">=3.10"
 license = { file = "LICENSE" }
-dependencies = []
+dependencies = [
+    'tomli>=2.0.1; python_version < "3.11"',
+]
 keywords = ["generator", "language", "linguistics", "cli", "words"]
 classifiers = [
     "License :: OSI Approved :: MIT License",

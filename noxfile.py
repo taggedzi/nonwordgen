@@ -8,8 +8,12 @@ from __future__ import annotations
 from pathlib import Path
 import shutil
 import sys
-import tomllib
 import zipfile
+
+try:  # Python 3.11+
+    import tomllib
+except ModuleNotFoundError:  # Python <3.11
+    import tomli as tomllib  # type: ignore[no-redef]
 
 import nox
 from nox.command import CommandFailed
