@@ -63,46 +63,109 @@ class BuiltinCommonWordsDictionary(DictionaryBackend):
 
 
 class WordfreqDictionary(DictionaryBackend):
-    """Dictionary backend powered by the optional wordfreq package."""
+    """
+    Dictionary backend that uses the `wordfreq` library to estimate whether
+    a string is a 'real' word in a given language.
+
+    If the language is not supported by wordfreq (e.g. Thai / 'th'), this
+    backend automatically disables itself instead of raising.
+    """
 
     def __init__(
         self,
-        real_word_min_zipf: float = 2.7,
         language: str = "en",
-        require_library: bool = False,
+        min_zipf: float = 3.0,
+        wordlist: str = "best",
+        real_word_min_zipf: float | None = None,
     ) -> None:
-        self.real_word_min_zipf = real_word_min_zipf
-        self.language = language
-        self._available = zipf_frequency is not None
-        if not self._available:
-            message = (
-                "wordfreq is not installed; WordfreqDictionary will not flag words."
-            )
-            if require_library:
-                raise RuntimeError(message)
-            logger.info(message)
+        # Allow both the original ``min_zipf`` name and the newer
+        # ``real_word_min_zipf`` keyword used by language plugins.
+        effective_min_zipf = (
+            real_word_min_zipf if real_word_min_zipf is not None else min_zipf
+        )
 
-    @property
-    def available(self) -> bool:
-        """Return True when the optional dependency is present."""
-        return self._available
+        self.language = language
+        self.min_zipf = effective_min_zipf
+        self.wordlist = wordlist
+        self._enabled = True
+        # Expose an ``available`` flag so callers can cheaply test whether the
+        # backend is usable, matching existing call sites that use getattr().
+        self.available = False
+
+        # If wordfreq is not installed, disable this backend immediately.
+        if zipf_frequency is None:  # pragma: no cover - optional dependency
+            logger.warning(
+                "wordfreq is not installed; disabling WordfreqDictionary backend."
+            )
+            self._enabled = False
+            return
+
+        # Probe wordfreq once so unsupported languages are detected early.
+        try:
+            # This will trigger internal checks and cache setup. Prefer using
+            # the ``wordlist`` keyword when supported, but fall back to a
+            # simpler call for test doubles that do not accept it.
+            try:
+                zipf_frequency("probe", language, wordlist=wordlist)
+            except TypeError:
+                zipf_frequency("probe", language)
+        except LookupError:
+            logger.warning(
+                "wordfreq lookup failed for language %r (no %r wordlist); "
+                "disabling WordfreqDictionary.",
+                language,
+                wordlist,
+            )
+            self._enabled = False
+        except Exception:
+            # Any unexpected errors -> disable, but keep the app running.
+            logger.exception(
+                "Unexpected error while initializing WordfreqDictionary for %r; "
+                "disabling WordfreqDictionary.",
+                language,
+            )
+            self._enabled = False
+        else:
+            self.available = True
 
     def is_real_word(self, word: str) -> bool:
-        if not self._available or zipf_frequency is None:
+        """
+        Return True if `word` is judged to be a real word by wordfreq.
+
+        For unsupported languages or if wordfreq fails, returns False and
+        permanently disables the backend.
+        """
+        if not self._enabled:
+            # If we know this backend is unusable, don't even try.
             return False
+
         try:
-            score = zipf_frequency(word, self.language)
-        except Exception:
-            # If wordfreq is installed but its data files are missing or broken,
-            # degrade gracefully instead of crashing the generator.
+            try:
+                score = zipf_frequency(word, self.language, wordlist=self.wordlist)
+            except TypeError:
+                score = zipf_frequency(word, self.language)
+        except LookupError:
+            # This can happen if the language *seemed* okay during probing
+            # but fails when actually loading the frequency list.
             logger.warning(
-                "wordfreq lookup failed for language '%s'; disabling WordfreqDictionary.",
+                "wordfreq raised LookupError for language %r during lookup; "
+                "disabling WordfreqDictionary.",
                 self.language,
-                exc_info=True,
             )
-            self._available = False
+            self._enabled = False
             return False
-        return score >= self.real_word_min_zipf
+        except Exception:
+            # Any other runtime issue in wordfreq: log and degrade only this backend.
+            logger.exception(
+                "wordfreq errored for language %r and word %r; "
+                "disabling WordfreqDictionary for this run.",
+                self.language,
+                word,
+            )
+            self._enabled = False
+            return False
+
+        return score >= self.min_zipf
 
 
 class CompositeDictionary(DictionaryBackend):
