@@ -85,6 +85,9 @@ jobs:
       - name: Build Windows EXE + zip
         run: nox -s build_exe   # session that creates the EXE and related artifacts
 
+      - name: Bundle Windows release zip
+        run: nox -s bundle_release
+
       - name: Upload Windows EXE artifacts
         uses: actions/upload-artifact@v4
         with:
