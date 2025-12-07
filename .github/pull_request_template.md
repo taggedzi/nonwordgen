@@ -12,6 +12,7 @@
 <!-- Describe how you tested this change -->
 - [ ] Ran CLI tests
 - [ ] Built GUI and launched
+- [ ] Verified SPDX headers
 - [ ] Verified behavior on Windows
 - [ ] Verified behavior on Linux
 - [ ] Other (describe):
