@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "nonwordgen"
-version = "1.2.1"
+version = "1.2.2"
 description = "Generate realistic like non-words in multiple languages."
 readme = "README.md"
 authors = [{name = "Matthew Craig", email = "taggedzi.mpc@gmail.com"}]
