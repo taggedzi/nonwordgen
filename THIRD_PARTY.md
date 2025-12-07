@@ -1,4 +1,3 @@
-# SPDX-License-Identifier: MIT
 # Third-party licenses and components
 
 This document lists the main third-party components used by `nonwordgen`

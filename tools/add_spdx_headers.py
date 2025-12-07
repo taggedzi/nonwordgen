@@ -43,6 +43,12 @@ SKIP_DIRS = {
     ".github",
 }
 
+# File extensions that should be treated as Markdown and skipped
+MARKDOWN_EXTS = {
+    ".md",
+    ".markdown",
+}
+
 # File extensions that should get a hash-style SPDX header
 HASH_COMMENT_EXTS = {
     ".py",
@@ -57,7 +63,6 @@ HASH_COMMENT_EXTS = {
     ".toml",
     ".yml",
     ".yaml",
-    ".md",
     ".txt",
     ".rst",
 }
@@ -71,6 +76,11 @@ def has_spdx_header(lines: list[str]) -> bool:
         if SPDX_TEXT in line:
             return True
     return False
+
+
+def is_markdown_file(path: pathlib.Path) -> bool:
+    """Return True if the path points to a Markdown file that should be skipped."""
+    return path.suffix.lower() in MARKDOWN_EXTS
 
 
 def detect_hash_comment_prefix(path: pathlib.Path) -> str | None:
@@ -118,6 +128,9 @@ def should_process_file(path: pathlib.Path) -> bool:
     """Decide whether this file should be considered for SPDX insertion."""
     if not path.is_file():
         return False
+    if is_markdown_file(path):
+        # Never add SPDX headers to Markdown files
+        return False
     if path.suffix.lower() in HASH_COMMENT_EXTS:
         return True
     return False
@@ -157,8 +170,9 @@ def process_file(
     """
     try:
         text = path.read_text(encoding="utf-8")
-    except UnicodeDecodeError:
-        # Likely a binary file; skip
+    except (OSError, UnicodeDecodeError) as exc:
+        # Likely a binary or unreadable file; skip but do not crash
+        print(f"Warning: could not read {path}: {exc}", file=sys.stderr)
         return False
 
     lines = text.splitlines(keepends=True)
@@ -178,7 +192,11 @@ def process_file(
         return False
 
     if not dry_run:
-        path.write_text("".join(updated_lines), encoding="utf-8")
+        try:
+            path.write_text("".join(updated_lines), encoding="utf-8")
+        except OSError as exc:
+            print(f"Warning: could not write {path}: {exc}", file=sys.stderr)
+            return False
 
     return True
 

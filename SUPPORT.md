@@ -1,4 +1,3 @@
-# SPDX-License-Identifier: MIT
 # 💬 Support Policy
 
 Thanks for using **nonwordgen**!  

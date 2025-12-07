@@ -1,4 +1,3 @@
-# SPDX-License-Identifier: MIT
 # 🧭 Code of Conduct
 
 Thank you for contributing to this project!
