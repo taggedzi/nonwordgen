@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 # 🧩 Contributing to **nonwordgen**
 
 Thank you for considering contributing to **nonwordgen**!

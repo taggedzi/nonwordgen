@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 # Ruff configuration for the nonwordgen project.
 # This keeps linting fast and consistent with Black while catching common bugs.
 

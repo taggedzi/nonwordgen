@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 """Serbian/Croatian/Bosnian language plugin implementation (Latin script)."""
 
 from __future__ import annotations

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 # Path: scripts/tree_maker.py
 """Print a tree of a project's files and directories, using a custom .treeignore style filter."""
 from pathlib import Path

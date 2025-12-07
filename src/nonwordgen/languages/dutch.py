@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 """Dutch language plugin implementation."""
 
 from __future__ import annotations

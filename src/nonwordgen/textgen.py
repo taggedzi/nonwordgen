@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 """Higher-level text generation helpers built atop WordGenerator."""
 
 from __future__ import annotations

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 """Configuration helpers bridging user-facing APIs and language plugins."""
 
 from __future__ import annotations

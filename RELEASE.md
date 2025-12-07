@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 # 🚀 RELEASE.md
 
 **How to Create and Publish a New Release of nonword-gen**

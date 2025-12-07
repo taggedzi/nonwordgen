@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 """Thai plugin using RTGS romanization for phonotactics."""
 
 from __future__ import annotations

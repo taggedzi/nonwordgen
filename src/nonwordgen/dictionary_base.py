@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 """Dictionary backend abstractions."""
 
 from __future__ import annotations

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 """Language plugin protocols for nonwordgen."""
 
 from __future__ import annotations

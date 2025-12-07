@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 """Strictness levels shared across language plugins."""
 
 from __future__ import annotations

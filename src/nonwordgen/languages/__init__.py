@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 """Language plugin registry and helpers."""
 
 from __future__ import annotations

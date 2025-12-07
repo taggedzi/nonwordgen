@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 # nonwordgen
 
 > **nonwordgen** - because real words are overrated!

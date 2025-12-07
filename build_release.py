@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 """Build helper for nonwordgen GUI releases.
 
 This script automates:
