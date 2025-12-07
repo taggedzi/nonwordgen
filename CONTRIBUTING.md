@@ -72,17 +72,20 @@ nonwordgen follows a consistent and strict-but-friendly coding style.
 
 We use:
 
-| Tool        | Purpose                              |
-| ----------- | ------------------------------------ |
-| **ruff**    | Linting & some auto-fixes            |
-| **black**   | Code formatting (PEP 8-ish)          |
-| **mypy**    | Type checking                        |
-| **pytest**  | Testing                              |
-| **tox/nox** | Automation (depending on your setup) |
+| Tool                     | Purpose                              |
+| ------------------------ | ------------------------------------ |
+| **add_spdx_headers.py**  | Ensure license text properly placed  |
+| **ruff**                 | Linting & some auto-fixes            |
+| **black**                | Code formatting (PEP 8-ish)          |
+| **mypy**                 | Type checking                        |
+| **pytest**               | Testing                              |
+| **tox/nox**              | Automation (depending on your setup) |
 
 ### Before submitting a PR
 
 ```bash
+nox -s spdx -- add # runs tools/add_spdx_headers.py to add the spdx license header to any file that is missing them
+nox -s spdx        # runs tools/add_spdx_headers.py to verify all files that require spdx headers have them.
 nox -s format      # runs ruff --fix + black
 nox -s lint        # runs ruff check
 nox -s typecheck   # runs mypy
@@ -92,6 +95,8 @@ nox -s tests       # ensures all tests pass
 Or manually:
 
 ```bash
+tools/add_spdx_headers.py 
+tools/add_spdx_headers.py --dry-run  # if any need modification test fails.
 ruff check .
 ruff format .
 black .
@@ -100,6 +105,26 @@ pytest
 ```
 
 All new code **must include type hints** and should include tests unless trivial.
+
+---
+
+## SPDX License Headers
+
+All source files in this project must contain an SPDX license identifier.
+
+To check for compliance:
+
+```bash
+nox -s spdx
+````
+
+To automatically add missing headers:
+
+```bash
+nox -s spdx -- add
+```
+
+Make sure your PR passes the SPDX check in CI.
 
 ---
 

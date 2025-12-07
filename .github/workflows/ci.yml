@@ -37,6 +37,10 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install nox
 
+      # Check for SPDX headers
+      - name: Check SPDX headers
+        run: nox -s spdx
+
       # Run test suite via nox.
       - name: Run tests session
         run: nox -s tests -p ${{ matrix.python-version }}

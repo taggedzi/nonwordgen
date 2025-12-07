@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: MIT
+
 # 🚀 RELEASE.md
 
 **How to Create and Publish a New Release of nonword-gen**
@@ -8,7 +9,7 @@ It is intentionally written with clarity and low cognitive load so that future m
 
 There are **two distinct types of “release” tasks**:
 
-1. **Packaging** → builds the Windows EXE and bundles files
+1. **Packaging** → builds the Windows EXE and bundles files  
 2. **Publishing** → updates the changelog, creates a git tag, and pushes the release to GitHub
 
 These are separate steps by design.
@@ -26,14 +27,30 @@ Before publishing a new release, make sure you’ve done the following:
    version = "X.Y.Z"
    ```
 
-2. **Commit all your changes**, including the version bump:
+2. **Ensure all SPDX headers are present**
+
+   Run:
+
+   ```bash
+   nox -s spdx
+   ```
+
+   If this fails, fix it by running:
+
+   ```bash
+   nox -s spdx -- add
+   ```
+
+   SPDX header compliance is required for all releases and enforced by CI.
+
+3. **Commit all your changes**, including the version bump:
 
    ```bash
    git add .
    git commit -m "Bump version to X.Y.Z"
    ```
 
-3. Ensure working tree is clean:
+4. Ensure working tree is clean:
 
    ```bash
    git status
@@ -64,12 +81,13 @@ This command performs:
 * Regenerates `CHANGELOG.md`
 * Commits the updated changelog (if changed)
 * Verifies the version matches `pyproject.toml`
+* Verifies SPDX compliance if CI has not already done so
 * Creates a git tag (`vX.Y.Z`)
 * Pushes the current branch & tag to GitHub
 
 Once the tag is pushed, **GitHub Actions automatically builds release artifacts**.
 
-You do **not** need to manually create a Release on GitHub - the workflow handles it.
+You do **not** need to manually create a Release on GitHub – the workflow handles it.
 
 ---
 
@@ -98,18 +116,21 @@ Most contributors will never need to run this manually.
 
 When you push a tag that matches:
 
-```
+```text
 v*.*.*
 ```
 
 GitHub Actions automatically:
 
-1. Runs tests, linting, typechecking
-2. Builds the Python packages (sdist/wheel)
-3. Regenerates `CHANGELOG.md` inside the build environment
-4. Builds the Windows EXE
-5. Bundles all artifacts
-6. Creates or updates a GitHub Release and uploads everything
+1. Runs SPDX header validation (`nox -s spdx`)
+2. Runs tests, linting, typechecking
+3. Builds the Python packages (sdist/wheel)
+4. Regenerates `CHANGELOG.md` inside the build environment
+5. Builds the Windows EXE
+6. Bundles all artifacts
+7. Creates or updates a GitHub Release and uploads everything
+
+If the SPDX check fails, the release will not proceed.
 
 **No manual steps needed.**
 
@@ -126,7 +147,7 @@ The release process has been intentionally automated so that:
 * You can perform a release with a single predictable command
 * CI does all the building for you
 
-If you return to this project after months away, don’t worry - just follow this file.
+If you return to this project after months away, don’t worry – just follow this file.
 
 ---
 
@@ -138,11 +159,14 @@ Assume you want to release version `0.5.0`.
 # Step 1: Update version
 edit pyproject.toml → version = "0.5.0"
 
-# Step 2: Commit
+# Step 2: Check SPDX compliance
+nox -s spdx
+
+# Step 3: Commit
 git add pyproject.toml
 git commit -m "Bump version to 0.5.0"
 
-# Step 3: Publish the release (tag + changelog + push)
+# Step 4: Publish the release (tag + changelog + push)
 nox -s publish_release -- 0.5.0
 ```
 
@@ -153,6 +177,16 @@ You are done. 🎉
 ---
 
 # 7️⃣ Troubleshooting
+
+### ❌ Error: SPDX validation failed
+
+Run:
+
+```bash
+nox -s spdx -- add
+git add .
+git commit -m "Add missing SPDX headers"
+```
 
 ### ❌ Error: working tree not clean
 
@@ -169,7 +203,7 @@ Use a new version number.
 
 ### ✔ I pushed the tag but no release appeared
 
-Check Actions - if the workflow failed early, you may need to fix the issue and push the tag again (deleting old tags if necessary).
+Check Actions – if the workflow failed early, you may need to fix the issue and push the tag again (deleting old tags if necessary).
 
 ---
 
@@ -181,4 +215,30 @@ Check Actions - if the workflow failed early, you may need to fix the issue and 
 | `tools/generate_changelog.py`   | Builds `CHANGELOG.md` from git history    |
 | `nox -s publish_release`        | Wrapper for the release script            |
 | `nox -s bundle_release`         | Builds Windows EXE + ZIP bundle           |
+| `nox -s spdx`                   | Validates required SPDX headers           |
 | `.github/workflows/release.yml` | CI pipeline that builds artifacts on tags |
+
+---
+
+# 9️⃣ SPDX Requirements (New Section)
+
+To ensure transparent and consistent licensing, every source file in this repository must include:
+
+```text
+# SPDX-License-Identifier: MIT
+```
+
+This applies to:
+
+* All Python files under `src/`
+* All scripts under `tools/`
+* Any other text-based source files (YAML, TOML, Markdown, etc.)
+
+You can validate or automatically add missing headers using:
+
+```bash
+nox -s spdx
+nox -s spdx -- add
+```
+
+SPDX compliance is enforced in CI for every branch and for all tagged releases.

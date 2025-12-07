@@ -52,6 +52,9 @@ jobs:
       - name: Install nox
         run: pip install nox
 
+      - name: Check SPDX headers  # Verify all codes has license SPDX info
+        run: nox -s spdx
+
       - name: Build distributions
         run: nox -s build_dist   # <-- your session that puts files in dist/
 

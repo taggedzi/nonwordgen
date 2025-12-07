@@ -308,6 +308,8 @@ def bundle_release(session: nox.Session) -> None:
 def spdx(session):
     """
     Check (default) or add SPDX headers to the repository.
+    Validates that all source files include an SPDX license header.
+    This session is enforced in CI and required for releases.
 
     Usage:
         nox -s spdx            # check only, fails if headers are missing
