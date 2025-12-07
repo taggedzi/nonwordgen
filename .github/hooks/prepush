@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+echo "Running nox prepush checks..."
+nox -s prepush

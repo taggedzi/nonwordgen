@@ -1,10 +1,6 @@
 # SPDX-License-Identifier: MIT
 """Nox sessions for testing, linting, type checking, and building."""
-
 from __future__ import annotations
-
-# Project uses a src/ layout: package is at src/nonwordgen
-
 from pathlib import Path
 import shutil
 import sys
@@ -19,7 +15,12 @@ import nox
 from nox.command import CommandFailed
 
 ROOT = Path(__file__).resolve().parent
-PYTHON_VERSIONS = ["3.11", "3.12"]
+
+
+def _run_pytest(session: nox.Session) -> None:
+    _install_project_editable(session)
+    session.install("pytest")
+    session.run("pytest", *session.posargs)
 
 
 def get_project_version() -> str:
@@ -72,15 +73,14 @@ def _find_build_script() -> Path:
 
 
 # Run the test suite with pytest.
-@nox.session(python=PYTHON_VERSIONS)
+@nox.session
 def tests(session: nox.Session) -> None:
-    _install_project_editable(session)
-    session.install("pytest")
-    session.run("pytest", *session.posargs)
+    """Run the test suite with the current interpreter."""
+    _run_pytest(session)
 
 
 # Run tests with coverage and generate coverage.xml.
-@nox.session(python=PYTHON_VERSIONS)
+@nox.session
 def coverage(session: nox.Session) -> None:
     _install_project_editable(session)
     session.install("pytest", "coverage", "pytest-cov")
@@ -114,7 +114,7 @@ def format(session: nox.Session) -> None:
 
 
 # Run static type checking with mypy.
-@nox.session(python=PYTHON_VERSIONS)
+@nox.session
 def typecheck(session: nox.Session) -> None:
     _install_project_editable(session)
     session.install("mypy")
@@ -345,3 +345,27 @@ def spdx(session):
         )
     else:
         session.log("All files already contain SPDX headers.")
+
+
+@nox.session
+def prepush(session: nox.Session) -> None:
+    """
+    Run all local checks before pushing to GitHub.
+
+    This will:
+      - auto-format the code
+      - verify SPDX headers
+      - run linting
+      - run type-checking
+      - run unit tests
+      - run coverage
+    """
+    session.log("Running pre-push checks: format → spdx → lint → typecheck → tests → coverage")
+
+    # These queue other sessions to be run in this Nox invocation.
+    session.notify("format")
+    session.notify("spdx")       # default is 'check' mode
+    session.notify("lint")
+    session.notify("typecheck")
+    session.notify("tests")
+    session.notify("coverage")
